@@ -1,5 +1,5 @@
 ### Theory
-####Upsetting process: An overview
+#### Upsetting process: An overview
 Upset Forging or Upsetting is defined as 'free forming', by which a billet or a portion of a workpiece is reduced in height between usually plane, parallel plates [ASM Handbook 1988]. Upsetting is a basic deformation process which can be varied in many ways. Upsetting of metals is a deformation process in which a (usually round) billet is compressed between two dies in a press or a hammer. This operation reduces the height of a part while increasing its diameter. The process is mostly used as an intermediate step in multiple step forging operations. The billet may be cold, warm or hot forged. A large segment of industry primarily depends on the upsetting process for producing parts ranging in complexity from simple bolts, screws, nuts, rivets or flanged shafts to wrench sockets that require simultaneous upsetting and piercing. Hot upsetting is also occasionally used as a finishing operation following hammer or press forging, such as in making crankshafts. A sketch of the upsetting process is shown in the below figure.
 <br>
 <center>
