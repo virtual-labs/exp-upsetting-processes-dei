@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Virtual Lab – Dayalbagh Educational Institute</title>
 </head>
 <body>
 
