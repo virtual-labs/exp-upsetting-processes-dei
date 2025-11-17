@@ -1,4 +1,3 @@
-### Procedure
 ## Virtual Lab – Dayalbagh Educational Institute  
 ### Upsetting Process — Simulation & Variables
 
@@ -15,6 +14,7 @@ One important variable that affects the forming process is press ram speed.
 ---
 
 ## HYDRAULIC PRESS SIMULATION
+
 
 | Variable | Value |
 |----------|-------|
@@ -33,6 +33,7 @@ One important variable that affects the forming process is press ram speed.
 
 ### FORCE DURING UPSETTING PROCESS (Hydraulic)
 
+
 | Material | CK45 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -45,6 +46,7 @@ One important variable that affects the forming process is press ram speed.
 
 ---
 
+
 | Material | Ti6Alv4 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -56,6 +58,7 @@ One important variable that affects the forming process is press ram speed.
 <iframe width="600" height="400" src="https://www.youtube.com/embed/FwpdehmcQn0?rel=0" frameborder="0" allowfullscreen></iframe>
 
 ---
+
 
 | Material | CuZn40Al2 |
 | Height | 100 mm |
@@ -73,6 +76,7 @@ One important variable that affects the forming process is press ram speed.
 
 ## MECHANICAL PRESS SIMULATION
 
+
 | Variable | Value |
 |----------|-------|
 | Material | AlZn5.6Mg2.5Cu1.5 |
@@ -89,6 +93,7 @@ One important variable that affects the forming process is press ram speed.
 
 ### FORCE DURING UPSETTING PROCESS (Mechanical)
 
+
 | Material | CK45 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -101,6 +106,7 @@ One important variable that affects the forming process is press ram speed.
 
 ---
 
+
 | Material | Ti6Alv4 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -112,6 +118,7 @@ One important variable that affects the forming process is press ram speed.
 <iframe width="600" height="400" src="https://www.youtube.com/embed/lsR5yypQkuk?rel=0" frameborder="0" allowfullscreen></iframe>
 
 ---
+
 
 | Material | CuZn40Al2 |
 | Height | 100 mm |
@@ -129,6 +136,7 @@ One important variable that affects the forming process is press ram speed.
 
 ## HAMMER PRESS SIMULATION
 
+
 | Variable | Value |
 |----------|-------|
 | Material | AlZn5.6Mg2.5Cu1.5 |
@@ -145,6 +153,7 @@ One important variable that affects the forming process is press ram speed.
 
 ### FORCE DURING UPSETTING PROCESS (Hammer)
 
+
 | Material | CK45 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -157,6 +166,7 @@ One important variable that affects the forming process is press ram speed.
 
 ---
 
+
 | Material | Ti6Alv4 |
 | Height | 100 mm |
 | Diameter | 100 mm |
@@ -168,6 +178,7 @@ One important variable that affects the forming process is press ram speed.
 <iframe width="600" height="400" src="https://www.youtube.com/embed/l02ZZkeHC0E?rel=0" frameborder="0" allowfullscreen></iframe>
 
 ---
+
 
 | Material | CuZn40Al2 |
 | Height | 100 mm |
@@ -186,3 +197,4 @@ One important variable that affects the forming process is press ram speed.
 ## COMPARISON VIDEO
 
 <iframe width="600" height="400" src="https://www.youtube.com/embed/8b5zd85WfHM?rel=0" frameborder="0" allowfullscreen></iframe>
+
