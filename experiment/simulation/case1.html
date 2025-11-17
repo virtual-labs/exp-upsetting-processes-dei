@@ -253,13 +253,21 @@
     }
 
     .video-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;        /* clicks go directly to iframe */
+  opacity: 0;                  /* hidden by default */
+  transition: opacity 0.25s ease-out;
+}
+
+/* Show play/pulse only on hover */
+.video-wrapper:hover .video-overlay {
+  opacity: 1;
+}
+
 
     .pulse-ring {
       width: 90px;
@@ -607,4 +615,5 @@ To study the effect of different materials during upsetting process on equivalen
   </script>
 </body>
 </html>
+
 
