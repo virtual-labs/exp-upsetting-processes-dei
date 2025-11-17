@@ -2,38 +2,90 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
+      "question": "Q1. The number of presses shown in upsetting process module are:",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "4",
+        "b": "1",
+        "c": "3",
+        "d": "7"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Correct — In the upsetting process module, four different presses are demonstrated, each representing different force application conditions.",
+        "b": "Incorrect — Only one press is not shown; multiple presses are demonstrated.",
+        "c": "Incorrect — Three presses are less than the actual number shown.",
+        "d": "Incorrect — Seven presses are not shown in the module."
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
     {
-      "question": "This is a Sample Question 2?",
+      "question": "Q2. The L/D ratio used in interactive bench of simulation for upsetting process are:",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "1.0,2.0,3.0",
+        "b": "1.0,1.5,2.0",
+        "c": "5.0,10.0,15.0",
+        "d": "10.0,12.0,15.0"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Incorrect — These values are possible but not the ones used in the bench simulation.",
+        "b": "Correct — The simulation commonly uses billet aspect ratios of 1.0, 1.5, and 2.0 to study deformation patterns.",
+        "c": "Incorrect — These are too large for typical upsetting simulation.",
+        "d": "Incorrect — These ratios are used for tall cylindrical workpieces, not for upsetting simulation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q3. Velocity of upper die in simulation for upsetting operation is:",
+      "answers": {
+        "a": "1 mm/sec & 2 mm/sec",
+        "b": "2 mm/sec & 5 mm/sec",
+        "c": "5 mm/sec & 10 mm/sec",
+        "d": "1 mm/sec & 10 mm/sec"
+      },
+      "explanations": {
+        "a": "Incorrect — These speeds are too low to represent complete deformation range.",
+        "b": "Incorrect — Partially correct speeds but not the full range used.",
+        "c": "Incorrect — These represent only higher strain rate conditions.",
+        "d": "Correct — The simulation tests the effect of slow (1 mm/sec) & high (10 mm/sec) die speed on deformation."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q4. In upsetting operation which die moves:",
+      "answers": {
+        "a": "Lower die",
+        "b": "Upper die",
+        "c": "Both",
+        "d": "None"
+      },
+      "explanations": {
+        "a": "Incorrect — The lower die is usually fixed in place.",
+        "b": "Correct — In most forging and upsetting operations, the upper die moves downward to apply compression.",
+        "c": "Incorrect — Both dies do not typically move in standard setups.",
+        "d": "Incorrect — At least one die must move in upsetting."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q5. Which process involves increasing of the cross-sectional area by pressing or hammering in a direction parallel to the original ingot axis:",
+      "answers": {
+        "a": "Peening",
+        "b": "Swaging",
+        "c": "Upsetting",
+        "d": "Setting Down"
+      },
+      "explanations": {
+        "a": "Incorrect — Peening improves surface finish and relieves stress, not used for cross-section increase.",
+        "b": "Incorrect — Swaging reduces diameter using repeated blows.",
+        "c": "Correct — Upsetting increases the diameter by shortening the height through axial compression.",
+        "d": "Incorrect — Setting down is used for local reduction in thickness of a bar."
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
     }
   ]
 }
+
