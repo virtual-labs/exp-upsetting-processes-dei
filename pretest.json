@@ -1,0 +1,91 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "Q1.The virtual simulation lab website shows information about which manufacturing process?",
+      "answers": {
+        "a": "Casting",
+        "b": "Welding",
+        "c": "Metal Forming",
+        "d": "Machining"
+      },
+      "explanations": {
+        "a": "This Vlab simulation does not explain casting.",
+        "b": "This Vlab simulation does not explain welding.",
+        "c": "Yes, this is about Metal forming (upsetting process)",
+        "d": "This Vlab simulation does not explain Machining."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Q2.The contribution of Indian forging industries in global forging market in percentage is?",
+      "answers": {
+        "a": "2",
+        "b": "11",
+        "c": "5",
+        "d": "22"
+      },
+      "explanations": {
+        "a": "The India metal forging market generated a revenue of USD 10,243.6 million in 2023 and is expected to reach USD 17,920.9 million by 2030  <a href='https://www.grandviewresearch.com/horizon/outlook/metal-forging-market/india'>here</a>",
+        "b": "The India market is expected to grow at a CAGR of 8.3% from 2024 to 2030.",
+        "c": "In terms of revenue, India accounted for 11.7% of the global metal forging market in 2023.",
+        "d": "Country-wise, China is expected to lead the global market in terms of revenue in 2030."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+      {
+      "question": "Q3.The main purpose of upsetting operation on billet is to:",
+      "answers": {
+        "a": "Decreasing diameter and increasing height",
+        "b": "Increasing diameter and increasing height",
+        "c": "Increasing diameter and decreasing height",
+        "d": "None of the above"
+      },
+       "explanations": {
+    "a": "Incorrect. Upsetting increases diameter, not decreases it.",
+    "b": "Incorrect. Upsetting does not increase height; it reduces height.",
+    "c": "Correct. Upsetting is a metal forming operation where the billet height decreases and diameter increases.",
+    "d": "Incorrect. One of the options describes upsetting correctly."
+  },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+{
+  "question": "Q4.The material which is not used in simulation for upsetting operation is:",
+  "answers": {
+    "a": "Titanium",
+    "b": "Aluminium",
+    "c": "Copper",
+    "d": "Lead"
+  },
+  "explanations": {
+    "a": "Incorrect. Titanium is one of the materials used in upsetting simulations.",
+    "b": "Incorrect. Aluminium is commonly used in metal forming simulations.",
+    "c": "Incorrect. Copper is also used for upsetting operation demonstrations.",
+    "d": "Correct. Lead is generally not used in this simulation for upsetting operations."
+  },
+  "correctAnswer": "d",
+  "difficulty": "beginner"
+},
+{
+  "question": "Q5.Upsetting process is a/an:",
+  "answers": {
+    "a": "Open die forging process",
+    "b": "Close die forging process",
+    "c": "Both",
+    "d": "None"
+  },
+  "explanations": {
+    "a": "Correct. Upsetting is typically performed as an open die forging operation applied to increase diameter by reducing height.",
+    "b": "Incorrect. Close die forging involves impression dies, not simple upsetting.",
+    "c": "Incorrect. Upsetting mainly refers to open die forging, not both types.",
+    "d": "Incorrect. Upsetting is indeed a forging process — specifically open die."
+  },
+  "correctAnswer": "a",
+  "difficulty": "beginner"
+}
+  ]
+}
+
