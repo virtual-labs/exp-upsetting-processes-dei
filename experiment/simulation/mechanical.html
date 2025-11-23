@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanical Press Simulation - Virtual Lab</title>
+<style>
+    /* --- Page Base Styles --- */
+    body {
+        margin: 0;
+        padding: 40px 20px;
+        font-family: "Poppins", system-ui, -apple-system, sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
+    }
+    
+    /* --- Simulation Card Styles --- */
+    .simulation-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        padding: 30px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .header-section {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .simulation-title {
+        color: #8A1134; /* DEI Branding Color */
+        font-size: 28px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .simulation-subtitle {
+        color: #64748b;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    .control-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    .control-group {
+        flex: 1 1 45%;
+        min-width: 280px;
+        margin-bottom: 15px;
+        background: #f9fafb;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid #f1f5f9;
+        transition: border-color 0.3s;
+    }
+
+    .control-group:hover {
+        border-color: #8A1134;
+    }
+
+    .control-group h3 {
+        margin: 0 0 10px;
+        font-size: 16px;
+        color: #334155;
+        border-left: 4px solid #8A1134;
+        padding-left: 10px;
+        font-weight: 600;
+    }
+
+    .radio-options label {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 15px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #475569;
+    }
+
+    .radio-options input {
+        margin-right: 6px;
+        accent-color: #8A1134;
+    }
+
+    .btn-group {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-submit {
+        background: #8A1134;
+        color: #fff;
+        box-shadow: 0 4px 6px rgba(138, 17, 52, 0.2);
+    }
+
+    .btn-submit:hover {
+        background: #6d0d29;
+        transform: translateY(-2px);
+    }
+
+    .btn-reset {
+        background: #e2e8f0;
+        color: #475569;
+    }
+
+    .btn-reset:hover {
+        background: #cbd5e1;
+    }
+
+    /* --- MODAL (POPUP) STYLES --- */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(4px);
+        animation: fadeIn 0.3s;
+    }
+
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: 40px auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 1100px;
+        border-radius: 12px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        animation: slideIn 0.4s;
+    }
+
+    .modal-header {
+        padding: 15px 20px;
+        background: #f1f5f9;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-header h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #334155;
+    }
+
+    .close-btn {
+        color: #64748b;
+        font-size: 32px;
+        font-weight: bold;
+        line-height: 1;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .close-btn:hover {
+        color: #ef4444;
+    }
+
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+        height: 0;
+        background: #000;
+    }
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .description-bar {
+        padding: 20px;
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+        color: #334155;
+        font-size: 15px;
+        line-height: 1.7;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
+    @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+</style>
+</head>
+<body>
+
+<div class="simulation-container">
+    <div class="header-section">
+        <h2 class="simulation-title">Interactive Simulation Bench for Mechanical Press</h2>
+        <p class="simulation-subtitle">Select parameters below to visualize the upsetting process.</p>
+        
+
+[Image of mechanical press components diagram]
+
+    </div>
+
+    <form id="simForm">
+        <div class="control-panel">
+            
+            <div class="control-group">
+                <h3>Material</h3>
+                <div class="radio-options">
+                    <label><input type="radio" name="mat" value="Aluminium" required> Aluminium</label>
+                    <label><input type="radio" name="mat" value="Copper"> Copper</label>
+                    <label><input type="radio" name="mat" value="Titanium"> Titanium</label>
+                    <label><input type="radio" name="mat" value="Steel"> ck-45 Steel</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>L/D Ratio of Workpiece</h3>
+                
+                <div class="radio-options">
+                    <label><input type="radio" name="ld" value="1" required> 1.0</label>
+                    <label><input type="radio" name="ld" value="1.5"> 1.5</label>
+                    <label><input type="radio" name="ld" value="2"> 2.0</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Coefficient of Friction</h3>
+                <div class="radio-options">
+                    <label><input type="radio" name="fr" value="0" required> Low (0)</label>
+                    <label><input type="radio" name="fr" value="Medium"> Medium</label>
+                    <label><input type="radio" name="fr" value="High"> High</label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>Material/Workpiece Temperature</h3>
+                <div class="radio-options">
+                    <label><input type="radio" name="temp" value="Cold" required> Cold</label>
+                    <label><input type="radio" name="temp" value="Hot"> Hot</label>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-submit">Run Simulation</button>
+                <button type="button" class="btn btn-reset" onclick="document.getElementById('simForm').reset()">Reset Form</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="videoModal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Simulation Result: Mechanical Press</h2>
+            <span class="close-btn" onclick="closeModal(null)">&times;</span>
+        </div>
+        <div class="video-wrapper">
+            <iframe id="simVideo" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="description-bar" id="simDesc">
+            </div>
+    </div>
+</div>
+
+<script>
+// Data mapping for Mechanical Press
+// Key format: Material_LD_Friction_Temp
+const simData = {
+    // --- ALUMINIUM COLD ---
+    "Aluminium_1_0_Cold": { id: "Xp-Bq2lL-tU", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=0. Graph shows forging force vs pilot height. Left scale shows temperature." },
+    "Aluminium_1_Medium_Cold": { id: "yQbZ9YpEnxQ", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=Medium. Velocity 1mm/sec." },
+    "Aluminium_1_High_Cold": { id: "-tC7YlVtDhA", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=High. Velocity 1mm/sec." },
+    
+    "Aluminium_1.5_0_Cold": { id: "3D2q8X4c0AU", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=0. Velocity 1mm/sec." },
+    "Aluminium_1.5_Medium_Cold": { id: "svUA3cyiI7M", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=Medium. Velocity 1mm/sec." },
+    "Aluminium_1.5_High_Cold": { id: "FZ5U-ttRsMM", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=High. Velocity 1mm/sec." },
+
+    "Aluminium_2_0_Cold": { id: "b-EM1WXqR3c", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=0. Velocity 1mm/sec." },
+    "Aluminium_2_Medium_Cold": { id: "aYhK7EiTJXI", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=Medium. Velocity 1mm/sec." },
+    "Aluminium_2_High_Cold": { id: "bUeyEkV39so", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=High. Velocity 1mm/sec." },
+
+    // --- ALUMINIUM HOT ---
+    "Aluminium_1_0_Hot": { id: "QGma60Qhw64", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=0." },
+    "Aluminium_1_Medium_Hot": { id: "y3alJ_RQSbM", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=Medium." },
+    "Aluminium_1_High_Hot": { id: "1fIeVnDiTsk", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=High." },
+
+    "Aluminium_1.5_0_Hot": { id: "6VoZcYjsFpY", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=0." },
+    "Aluminium_1.5_Medium_Hot": { id: "C8hOS2AeNoo", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=Medium." },
+    "Aluminium_1.5_High_Hot": { id: "vSyVHJhjXqo", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=High." },
+
+    "Aluminium_2_0_Hot": { id: "bBcvUfSyuOE", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=0." },
+    "Aluminium_2_Medium_Hot": { id: "eeOnx0_h98Y", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=Medium." },
+    "Aluminium_2_High_Hot": { id: "_q2EcobGsZg", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=High." },
+
+    // --- COPPER COLD ---
+    "Copper_1_0_Cold": { id: "Ay_e6inSNJ4", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=0." },
+    "Copper_1_Medium_Cold": { id: "KHFSna3WYGY", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=Medium." },
+    "Copper_1_High_Cold": { id: "2eUVrt19Dpc", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=High." },
+
+    "Copper_1.5_0_Cold": { id: "LZ_U6OxuACg", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=0." },
+    "Copper_1.5_Medium_Cold": { id: "SSlyvyUBxZU", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=Medium." },
+    "Copper_1.5_High_Cold": { id: "moPQ2nk5gDg", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=High." },
+
+    "Copper_2_0_Cold": { id: "G5wZ7RKTxbk", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=0." },
+    "Copper_2_Medium_Cold": { id: "9XktRYoysrY", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=Medium." },
+    "Copper_2_High_Cold": { id: "OZ9hed_dkaU", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=High." },
+
+    // --- COPPER HOT ---
+    "Copper_1_0_Hot": { id: "QyowFqJVjqo", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=0." },
+    "Copper_1_Medium_Hot": { id: "uq867SDtMX0", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=Medium." },
+    "Copper_1_High_Hot": { id: "mMkK2LZip2Y", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=High." },
+
+    "Copper_1.5_0_Hot": { id: "GB5EQVKHayI", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=0." },
+    "Copper_1.5_Medium_Hot": { id: "is_8MInyDJ8", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=Medium. Scale shows equivalent strain." },
+    "Copper_1.5_High_Hot": { id: "3Uhq6jv7qrw", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=High." },
+
+    "Copper_2_0_Hot": { id: "5IM_0jrIOvw", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=0." },
+    "Copper_2_Medium_Hot": { id: "63FUwnUAoBQ", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=Medium." },
+    "Copper_2_High_Hot": { id: "6as0xm6T_XY", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=High." },
+
+    // --- STEEL COLD ---
+    "Steel_1_0_Cold": { id: "SLEJFcmKpSU", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=0." },
+    "Steel_1_Medium_Cold": { id: "yRqzuBMF6bk", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=Medium." },
+    "Steel_1_High_Cold": { id: "NC_UQXpMyNc", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=High." },
+
+    "Steel_1.5_0_Cold": { id: "rwUkIa55dno", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=0." },
+    "Steel_1.5_Medium_Cold": { id: "GeK7nGvUnPc", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=Medium." },
+    "Steel_1.5_High_Cold": { id: "1bF6sdOPgB8", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=High." },
+
+    "Steel_2_0_Cold": { id: "X9rXJMZPRsA", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=0." },
+    "Steel_2_Medium_Cold": { id: "8vkmdItF4cw", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=Medium." },
+    "Steel_2_High_Cold": { id: "eKYS5X7kBXk", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=High." },
+
+    // --- STEEL HOT ---
+    "Steel_1_0_Hot": { id: "V_RScIStnTg", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=0." },
+    "Steel_1_Medium_Hot": { id: "PCLWEHkYU5g", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=Medium." },
+    "Steel_1_High_Hot": { id: "HemzEEJ73Ws", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=High." },
+
+    "Steel_1.5_0_Hot": { id: "04v2g-4rnwE", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=0." },
+    "Steel_1.5_Medium_Hot": { id: "x6hE60TQpd0", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=Medium." },
+    "Steel_1.5_High_Hot": { id: "CYf6ekJANLo", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=High." },
+
+    "Steel_2_0_Hot": { id: "_q6IAva1HAg", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=0." },
+    "Steel_2_Medium_Hot": { id: "RDiQlhiYcPE", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=Medium." },
+    "Steel_2_High_Hot": { id: "Xw-0wUhYrvc", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=High." },
+
+    // --- TITANIUM COLD ---
+    "Titanium_1_0_Cold": { id: "C7NRM9976UA", desc: "Titanium Cold Upsetting (L/D=1, Friction=0). Max Force: 290.52 tonnes. Avg equivalent strain: 0.69. Axis symmetric simulation." },
+    "Titanium_1_Medium_Cold": { id: "W2bHPsl157Q", desc: "Titanium Cold Upsetting (L/D=1, Friction=Medium). Initial Temp: 25C, Final Temp: 261.85C. Max Force: 302.06 tonnes." },
+    "Titanium_1_High_Cold": { id: "YdPP0-36ifM", desc: "Titanium Cold Upsetting (L/D=1, Friction=High). Initial Temp: 25C, Final Temp: 316.71C. Max Force: 319.02 tonnes." },
+
+    "Titanium_1.5_0_Cold": { id: "jqFZkP_a_3o", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=0). Initial Temp: 25C, Final Temp: 136.16C. Max Force: 211.09 tonnes." },
+    "Titanium_1.5_Medium_Cold": { id: "750605tq1Qs", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=Medium). Initial Temp: 25C, Final Temp: 137.83C. Max Force: 214.12 tonnes." },
+    "Titanium_1.5_High_Cold": { id: "WrnmcbjyC1g", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=High). Initial Temp: 25C, Final Temp: 166.21C. Max Force: 213.9 tonnes." },
+
+    "Titanium_2_0_Cold": { id: "W4ao11XXz2I", desc: "Titanium Cold Upsetting (L/D=2, Friction=0). Initial Temp: 25C, Final Temp: 99.82C. Max Force: 181.97 tonnes." },
+    "Titanium_2_Medium_Cold": { id: "Uz3Qw0Ts3S4", desc: "Titanium Cold Upsetting (L/D=2, Friction=Medium). Initial Temp: 25C, Final Temp: 109.51C. Max Force: 183.78 tonnes." },
+    "Titanium_2_High_Cold": { id: "hhZgb-2q37Q", desc: "Titanium Cold Upsetting (L/D=2, Friction=High). Initial Temp: 25C, Final Temp: 115.50C. Max Force: 185.38 tonnes." },
+
+    // --- TITANIUM HOT ---
+    "Titanium_1_0_Hot": { id: "S51jNOrc36k", desc: "Titanium Hot Upsetting (L/D=1, Friction=0). Initial Temp: 300C, Final Temp: 619.73C. Max Force: 630.29 tonnes." },
+    "Titanium_1_Medium_Hot": { id: "GXdeANmtAHg", desc: "Titanium Hot Upsetting (L/D=1, Friction=Medium). Initial Temp: 300C, Final Temp: 690.12C. Max Force: 639.88 tonnes." },
+    "Titanium_1_High_Hot": { id: "2NQYZnniyug", desc: "Titanium Hot Upsetting (L/D=1, Friction=High). Initial Temp: 300C, Final Temp: 580.25C. Max Force: 442.64 tonnes." },
+
+    "Titanium_1.5_0_Hot": { id: "OITpI9aiHos", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=0). Initial Temp: 300C, Final Temp: 541.26C. Max Force: 588.9 tonnes." },
+    "Titanium_1.5_Medium_Hot": { id: "T-ZVgbM6_eY", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=Medium). Initial Temp: 300C, Final Temp: 620.22C. Max Force: 594.62 tonnes." },
+    "Titanium_1.5_High_Hot": { id: "hQ4XmYIrKIs", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=High). Initial Temp: 300C, Final Temp: 654.40C. Max Force: 605.43 tonnes." },
+
+    "Titanium_2_0_Hot": { id: "5L4wY2ncjjI", desc: "Titanium Hot Upsetting (L/D=2, Friction=0). Initial Temp: 300C, Final Temp: 495.28C. Max Force: 562.45 tonnes." },
+    "Titanium_2_Medium_Hot": { id: "uZzfKu5NQbo", desc: "Titanium Hot Upsetting (L/D=2, Friction=Medium). Initial Temp: 300C, Final Temp: 559.40C. Max Force: 566.54 tonnes." },
+    "Titanium_2_High_Hot": { id: "NiW27QYWB4k", desc: "Titanium Hot Upsetting (L/D=2, Friction=High). Initial Temp: 300C, Final Temp: 589.11C. Max Force: 574.11 tonnes." }
+};
+
+document.getElementById('simForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+  
+    const formData = new FormData(e.target);
+    const mat = formData.get('mat');
+    const ld = formData.get('ld');
+    const fr = formData.get('fr');
+    const temp = formData.get('temp'); // Mapped from 'm/w' in original PHP
+
+    if(!mat || !ld || !fr || !temp) {
+        alert("Please select all options to run the simulation.");
+        return;
+    }
+
+    // Construct the key based on format: Material_LD_Friction_Temp
+    const key = `${mat}_${ld}_${fr}_${temp}`;
+    const result = simData[key];
+
+    if (result) {
+        openModal(result);
+    } else {
+        console.log("Missing Key:", key);
+        alert("Simulation data not found for this specific combination.");
+    }
+});
+
+function openModal(result) {
+    const modal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('simVideo');
+    const descBox = document.getElementById('simDesc');
+    
+    videoFrame.src = "https://www.youtube.com/embed/" + result.id + "?autoplay=1";
+    descBox.textContent = result.desc;
+    
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal(event) {
+    if (event === null || event.target.id === 'videoModal') {
+        const modal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('simVideo');
+        
+        modal.style.display = "none";
+        videoFrame.src = ""; // Stop video
+        document.body.style.overflow = "auto";
+    }
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+        closeModal(null);
+    }
+});
+</script>
+</body>
+</html>
