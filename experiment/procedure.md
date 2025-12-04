@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 </head>
 <body>
-
-<h2>Virtual Lab – Dayalbagh Educational Institute</h2>
 <h3>Upsetting Process — Simulation & Variables</h3>
 <hr>
 
