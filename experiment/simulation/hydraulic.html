@@ -1,295 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hydraulic Press Simulation</title>
-<style>
-    /* --- Page Base Styles --- */
-    body {
-        margin: 0;
-        padding: 40px 20px;
-        font-family: "Poppins", system-ui, -apple-system, sans-serif;
-        background: #f8fafc;
-        color: #0f172a;
-    }
-    
-    /* --- Simulation Card Styles --- */
-    .simulation-container {
-        max-width: 1000px;
-        margin: 0 auto;
-        background: #ffffff;
-        border-radius: 14px;
-        border: 1px solid #e2e8f0;
-        padding: 30px;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-    }
+  <h2 class="simulation-title">Interactive Simulation Bench for Hydraulic Press</h2>
 
-    .simulation-title {
-        text-align: center;
-        color: #8A1134;
-        font-size: 28px;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        border-bottom: 2px solid #eee;
-        padding-bottom: 15px;
-        font-weight: 700;
-    }
-
-    .control-panel {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: space-between;
-    }
-
-    .control-group {
-        flex: 1 1 45%;
-        min-width: 280px;
-        margin-bottom: 15px;
-        background: #f9fafb;
-        padding: 15px;
-        border-radius: 8px;
-        border: 1px solid #f1f5f9;
-    }
-
-    .control-group h3 {
-        margin: 0 0 10px;
-        font-size: 16px;
-        color: #334155;
-        border-left: 4px solid #8A1134;
-        padding-left: 10px;
-        font-weight: 600;
-    }
-
-    .radio-options label {
-        display: inline-flex;
-        align-items: center;
-        margin-right: 15px;
-        margin-bottom: 5px;
-        cursor: pointer;
-        font-size: 14px;
-        color: #475569;
-    }
-
-    .radio-options input {
-        margin-right: 6px;
-        accent-color: #8A1134;
-    }
-
-    .btn-group {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-
-    .btn {
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        border: none;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-submit {
-        background: #8A1134;
-        color: #fff;
-        box-shadow: 0 4px 6px rgba(138, 17, 52, 0.2);
-    }
-
-    .btn-submit:hover {
-        background: #6d0d29;
-        transform: translateY(-2px);
-    }
-
-    .btn-reset {
-        background: #e2e8f0;
-        color: #475569;
-    }
-
-    .btn-reset:hover {
-        background: #cbd5e1;
-    }
-
-    /* --- MODAL (POPUP) STYLES --- */
-    .modal-overlay {
-        display: none; /* Hidden by default */
-        position: fixed;
-        z-index: 9999;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.85); /* Dark dimmed background */
-        backdrop-filter: blur(4px);
-        animation: fadeIn 0.3s;
-    }
-
-    .modal-content {
-        position: relative;
-        background-color: #fefefe;
-        margin: 40px auto; /* Center vertically with some top margin */
-        padding: 0;
-        border: 1px solid #888;
-        width: 90%; /* Responsive width */
-        max-width: 1200px; /* Large max width for bigger video */
-        border-radius: 12px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        overflow: hidden;
-        animation: slideIn 0.4s;
-    }
-
-    .modal-header {
-        padding: 15px 20px;
-        background: #f1f5f9;
-        border-bottom: 1px solid #e2e8f0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .modal-header h2 {
-        margin: 0;
-        font-size: 20px;
-        color: #334155;
-    }
-
-    /* The Close Button */
-    .close-btn {
-        color: #64748b;
-        font-size: 32px;
-        font-weight: bold;
-        line-height: 1;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-
-    .close-btn:hover,
-    .close-btn:focus {
-        color: #ef4444;
-        text-decoration: none;
-    }
-
-    .video-wrapper {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-        height: 0;
-        background: #000;
-    }
-
-    .video-wrapper iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-    }
-
-    .description-bar {
-        padding: 20px;
-        background: #fff;
-        border-top: 1px solid #e2e8f0;
-        color: #334155;
-        font-size: 16px;
-        line-height: 1.6;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-        from {opacity: 0} 
-        to {opacity: 1}
-    }
-    @keyframes slideIn {
-        from {transform: translateY(-50px); opacity: 0;}
-        to {transform: translateY(0); opacity: 1;}
-    }
-</style>
-</head>
-<body>
-
-<div class="simulation-container">
-    <h2 class="simulation-title">Interactive Simulation Bench</h2>
-
-    <form id="simForm">
-        <div class="control-panel">
-            
-            <div class="control-group">
-                <h3>Material</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="mat" value="Aluminium" required> Aluminium</label>
-                    <label><input type="radio" name="mat" value="Copper"> Copper</label>
-                    <label><input type="radio" name="mat" value="Titanium"> Titanium</label>
-                    <label><input type="radio" name="mat" value="Steel"> ck-45 Steel</label>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>L/D Ratio of Workpiece</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="ld" value="1" required> 1.0</label>
-                    <label><input type="radio" name="ld" value="1.5"> 1.5</label>
-                    <label><input type="radio" name="ld" value="2"> 2.0</label>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Coefficient of Friction</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="fr" value="0" required> Low (0)</label>
-                    <label><input type="radio" name="fr" value="Medium"> Medium</label>
-                    <label><input type="radio" name="fr" value="High"> High</label>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Velocity of Upper Die</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="udie" value="1" required> 1 mm/sec</label>
-                    <label><input type="radio" name="udie" value="10"> 10 mm/sec</label>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h3>Temperature</h3>
-                <div class="radio-options">
-                    <label><input type="radio" name="mw" value="Cold" required> Cold</label>
-                    <label><input type="radio" name="mw" value="Hot"> Hot</label>
-                </div>
-            </div>
-
-            <div class="btn-group">
-                <button type="submit" class="btn btn-submit">Run Simulation</button>
-                <button type="button" class="btn btn-reset" onclick="document.getElementById('simForm').reset()">Reset Form</button>
-            </div>
+  <form id="simForm">
+    <div class="control-panel">
+      
+      <div class="control-group">
+        <h3>Material</h3>
+        <div class="radio-options">
+          <label><input type="radio" name="mat" value="Aluminium" required> Aluminium</label>
+          <label><input type="radio" name="mat" value="Copper"> Copper</label>
+          <label><input type="radio" name="mat" value="Titanium"> Titanium</label>
+          <label><input type="radio" name="mat" value="Steel"> ck-45 Steel</label>
         </div>
-    </form>
-</div>
+      </div>
 
-<div id="videoModal" class="modal-overlay" onclick="closeModal(event)">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="modalTitle">Simulation Result</h2>
-            <span class="close-btn" onclick="closeModal(null)">&times;</span>
+      <div class="control-group">
+        <h3>L/D Ratio of Workpiece</h3>
+        <div class="radio-options">
+          <label><input type="radio" name="ld" value="1" required> 1.0</label>
+          <label><input type="radio" name="ld" value="1.5"> 1.5</label>
+          <label><input type="radio" name="ld" value="2"> 2.0</label>
         </div>
-        <div class="video-wrapper">
-            <iframe id="simVideo" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <div class="control-group">
+        <h3>Coefficient of Friction</h3>
+        <div class="radio-options">
+          <label><input type="radio" name="fr" value="0" required> Low (0)</label>
+          <label><input type="radio" name="fr" value="Medium"> Medium</label>
+          <label><input type="radio" name="fr" value="High"> High</label>
         </div>
-        <div class="description-bar" id="simDesc">
-            </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Velocity of Upper Die</h3>
+        <div class="radio-options">
+          <label><input type="radio" name="udie" value="1" required> 1 mm/sec</label>
+          <label><input type="radio" name="udie" value="10"> 10 mm/sec</label>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <h3>Temperature</h3>
+        <div class="radio-options">
+          <label><input type="radio" name="mw" value="Cold" required> Cold</label>
+          <label><input type="radio" name="mw" value="Hot"> Hot</label>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" class="btn btn-submit">Run Simulation</button>
+        <button type="button" class="btn btn-reset" onclick="resetSim()">Reset</button>
+      </div>
     </div>
-</div>
+  </form>
 
+  <div id="result-area">
+    <div class="video-container">
+      <iframe id="simVideo" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="description-box" id="simDesc"></div>
+  </div>
+<style>
+  /* Clean One-Liner Style approach for readability and performance */
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background-color:#f4f4f9;margin:0;padding:0;color:#333}h1,h2,h3{margin:0 0 10px;color:#8A1134}#header{background:#333;color:#fff;padding:10px 20px}#header ul{list-style:none;padding:0;margin:0;display:flex;gap:15px}#header a{text-decoration:none;color:#fff;font-weight:bold;font-size:14px}.container{max-width:1024px;margin:20px auto;background:#fff;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.1);border-radius:8px}.simulation-title{text-align:center;color:#8A1134;font-size:24px;margin-bottom:20px;text-transform:uppercase;border-bottom:2px solid #eee;padding-bottom:10px}.control-panel{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;background:#f9f9f9;padding:20px;border-radius:8px;border:1px solid #e0e0e0}.control-group{flex:1 1 45%;min-width:300px;margin-bottom:15px}.control-group h3{font-size:16px;color:#555;border-left:4px solid #8A1134;padding-left:8px;margin-bottom:10px}.radio-options label{margin-right:15px;cursor:pointer;display:inline-block}.radio-options input{margin-right:5px}.btn-group{width:100%;text-align:center;margin-top:20px}.btn{padding:10px 25px;font-size:16px;cursor:pointer;border:none;border-radius:4px;margin:0 5px;transition:background 0.3s}.btn-submit{background:#8A1134;color:#fff}.btn-submit:hover{background:#6d0d29}.btn-reset{background:#ccc;color:#333}.btn-reset:hover{background:#bbb}#result-area{margin-top:30px;display:none;border-top:2px solid #eee;padding-top:20px}.video-container{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:#000;margin-bottom:20px}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%}.description-box{background:#eef;padding:15px;border-left:5px solid #8A1134;border-radius:4px;line-height:1.6}#footer{text-align:center;padding:20px;font-size:12px;color:#777;margin-top:40px;border-top:1px solid #ddd}
+</style>
+        </section>
+
+        <!-- 4th section – will wrap to next row, still same design -->
+        
+    </div>
 <script>
-// Database of all video mappings
+// Database of all video mappings extracted from the original PHP
 const simData = {
+  // Format Key: Material_LD_Friction_Velocity_Temp
+  
   // --- ALUMINIUM ---
   "Aluminium_1_0_1_Cold": { id: "ZM4KTeY0fkM", desc: "Aluminium, L/D=1, Cold, Friction=0, Vel=1mm/s. Graph: Forging force vs pilot height." },
   "Aluminium_1_0_10_Cold": { id: "YexxEWMmr0g", desc: "Aluminium, L/D=1, Cold, Friction=0, Vel=10mm/s. Graph: Forging force vs pilot height." },
@@ -297,30 +81,35 @@ const simData = {
   "Aluminium_1_Medium_10_Cold": { id: "lcswntWlTs0", desc: "Aluminium, L/D=1, Cold, Friction=Medium, Vel=10mm/s." },
   "Aluminium_1_High_1_Cold": { id: "vQPLcJQdQoI", desc: "Aluminium, L/D=1, Cold, Friction=High, Vel=1mm/s." },
   "Aluminium_1_High_10_Cold": { id: "IAm1E3RNMvY", desc: "Aluminium, L/D=1, Cold, Friction=High, Vel=10mm/s." },
+  
   "Aluminium_1.5_0_1_Cold": { id: "CxQRbjk6hI0", desc: "Aluminium, L/D=1.5, Cold, Friction=0, Vel=1mm/s." },
   "Aluminium_1.5_0_10_Cold": { id: "UejnTV3nxbE", desc: "Aluminium, L/D=1.5, Cold, Friction=0, Vel=10mm/s." },
   "Aluminium_1.5_Medium_1_Cold": { id: "FaFOf7GScdo", desc: "Aluminium, L/D=1.5, Cold, Friction=Medium, Vel=1mm/s." },
   "Aluminium_1.5_Medium_10_Cold": { id: "VXUML__jZkU", desc: "Aluminium, L/D=1.5, Cold, Friction=Medium, Vel=10mm/s." },
   "Aluminium_1.5_High_1_Cold": { id: "nn5ImD6zPtA", desc: "Aluminium, L/D=1.5, Cold, Friction=High, Vel=1mm/s." },
   "Aluminium_1.5_High_10_Cold": { id: "mbnWqKSham0", desc: "Aluminium, L/D=1.5, Cold, Friction=High, Vel=10mm/s." },
+
   "Aluminium_2_0_1_Cold": { id: "MJDVGHrUfqo", desc: "Aluminium, L/D=2, Cold, Friction=0, Vel=1mm/s." },
   "Aluminium_2_0_10_Cold": { id: "vlrJRrQzbEc", desc: "Aluminium, L/D=2, Cold, Friction=0, Vel=10mm/s." },
   "Aluminium_2_Medium_1_Cold": { id: "i0WwhsaNPF0", desc: "Aluminium, L/D=2, Cold, Friction=Medium, Vel=1mm/s." },
   "Aluminium_2_Medium_10_Cold": { id: "2UK-T73ENdQ", desc: "Aluminium, L/D=2, Cold, Friction=Medium, Vel=10mm/s." },
   "Aluminium_2_High_1_Cold": { id: "ebH_dwlG4v0", desc: "Aluminium, L/D=2, Cold, Friction=High, Vel=1mm/s." },
   "Aluminium_2_High_10_Cold": { id: "gvCLYLauX6g", desc: "Aluminium, L/D=2, Cold, Friction=High, Vel=10mm/s." },
+
   "Aluminium_1_0_1_Hot": { id: "rvJq7REBAjg", desc: "Aluminium, L/D=1, Hot, Friction=0, Vel=1mm/s." },
   "Aluminium_1_0_10_Hot": { id: "7cjinrkKRZU", desc: "Aluminium, L/D=1, Hot, Friction=0, Vel=10mm/s." },
   "Aluminium_1_Medium_1_Hot": { id: "UvseiAjBEMs", desc: "Aluminium, L/D=1, Hot, Friction=Medium, Vel=1mm/s." },
   "Aluminium_1_Medium_10_Hot": { id: "QxonJoO3t9g", desc: "Aluminium, L/D=1, Hot, Friction=Medium, Vel=10mm/s." },
   "Aluminium_1_High_1_Hot": { id: "x30WXY8AF24", desc: "Aluminium, L/D=1, Hot, Friction=High, Vel=1mm/s." },
   "Aluminium_1_High_10_Hot": { id: "4W6OPzg8o18", desc: "Aluminium, L/D=1, Hot, Friction=High, Vel=10mm/s." },
+  
   "Aluminium_1.5_0_1_Hot": { id: "Tahzyi1sMak", desc: "Aluminium, L/D=1.5, Hot, Friction=0, Vel=1mm/s." },
   "Aluminium_1.5_0_10_Hot": { id: "iDYT8oY5j8g", desc: "Aluminium, L/D=1.5, Hot, Friction=0, Vel=10mm/s." },
   "Aluminium_1.5_Medium_1_Hot": { id: "OAqn11LzhyY", desc: "Aluminium, L/D=1.5, Hot, Friction=Medium, Vel=1mm/s." },
   "Aluminium_1.5_Medium_10_Hot": { id: "Zwx_l0a0OHg", desc: "Aluminium, L/D=1.5, Hot, Friction=Medium, Vel=10mm/s." },
   "Aluminium_1.5_High_1_Hot": { id: "pDhMx_JY50E", desc: "Aluminium, L/D=1.5, Hot, Friction=High, Vel=1mm/s." },
   "Aluminium_1.5_High_10_Hot": { id: "QnvxdaobFpk", desc: "Aluminium, L/D=1.5, Hot, Friction=High, Vel=10mm/s." },
+  
   "Aluminium_2_0_1_Hot": { id: "WP1Iq5pkJMs", desc: "Aluminium, L/D=2, Hot, Friction=0, Vel=1mm/s." },
   "Aluminium_2_0_10_Hot": { id: "IK5oqLSQIA8", desc: "Aluminium, L/D=2, Hot, Friction=0, Vel=10mm/s." },
   "Aluminium_2_Medium_1_Hot": { id: "x-BB4SeCQls", desc: "Aluminium, L/D=2, Hot, Friction=Medium, Vel=1mm/s." },
@@ -335,30 +124,35 @@ const simData = {
   "Copper_1_Medium_10_Cold": { id: "U4J6BoFsr7Y", desc: "Copper, L/D=1, Cold, Friction=Medium, Vel=10mm/s." },
   "Copper_1_High_1_Cold": { id: "_fkgivA0K2E", desc: "Copper, L/D=1, Cold, Friction=High, Vel=1mm/s." },
   "Copper_1_High_10_Cold": { id: "w2I1MBDMkvw", desc: "Copper, L/D=1, Cold, Friction=High, Vel=10mm/s." },
+  
   "Copper_1.5_0_1_Cold": { id: "p8Cdj6H7Smw", desc: "Copper, L/D=1.5, Cold, Friction=0, Vel=1mm/s." },
   "Copper_1.5_0_10_Cold": { id: "ZPv0mBbFDdA", desc: "Copper, L/D=1.5, Cold, Friction=0, Vel=10mm/s." },
   "Copper_1.5_Medium_1_Cold": { id: "2z5QlMT8HeI", desc: "Copper, L/D=1.5, Cold, Friction=Medium, Vel=1mm/s." },
   "Copper_1.5_Medium_10_Cold": { id: "QzR37TDjWQU", desc: "Copper, L/D=1.5, Cold, Friction=Medium, Vel=10mm/s." },
   "Copper_1.5_High_1_Cold": { id: "IDnWX9kOq9U", desc: "Copper, L/D=1.5, Cold, Friction=High, Vel=1mm/s." },
   "Copper_1.5_High_10_Cold": { id: "CEURWyA_deA", desc: "Copper, L/D=1.5, Cold, Friction=High, Vel=10mm/s." },
+
   "Copper_2_0_1_Cold": { id: "1eA0xKdZ2II", desc: "Copper, L/D=2, Cold, Friction=0, Vel=1mm/s." },
   "Copper_2_0_10_Cold": { id: "ipIdV3cfh1g", desc: "Copper, L/D=2, Cold, Friction=0, Vel=10mm/s." },
   "Copper_2_Medium_1_Cold": { id: "EcsZHx6jfZM", desc: "Copper, L/D=2, Cold, Friction=Medium, Vel=1mm/s." },
   "Copper_2_Medium_10_Cold": { id: "uqRlhBuqMFI", desc: "Copper, L/D=2, Cold, Friction=Medium, Vel=10mm/s." },
   "Copper_2_High_1_Cold": { id: "eNyWcZ3xHlI", desc: "Copper, L/D=2, Cold, Friction=High, Vel=1mm/s." },
   "Copper_2_High_10_Cold": { id: "6DZZ_XB2rQo", desc: "Copper, L/D=2, Cold, Friction=High, Vel=10mm/s." },
+
   "Copper_1_0_1_Hot": { id: "BGCYMKhU8k4", desc: "Copper, L/D=1, Hot, Friction=0, Vel=1mm/s." },
   "Copper_1_0_10_Hot": { id: "-mmRdfVzSQI", desc: "Copper, L/D=1, Hot, Friction=0, Vel=10mm/s." },
   "Copper_1_Medium_1_Hot": { id: "dwMc43-hpDk", desc: "Copper, L/D=1, Hot, Friction=Medium, Vel=1mm/s." },
   "Copper_1_Medium_10_Hot": { id: "B4w8YMgbL2Q", desc: "Copper, L/D=1, Hot, Friction=Medium, Vel=10mm/s." },
   "Copper_1_High_1_Hot": { id: "u6luMVWVFGA", desc: "Copper, L/D=1, Hot, Friction=High, Vel=1mm/s." },
   "Copper_1_High_10_Hot": { id: "YZZ_w2d6GR4", desc: "Copper, L/D=1, Hot, Friction=High, Vel=10mm/s." },
+
   "Copper_1.5_0_1_Hot": { id: "cQxPCNm7550", desc: "Copper, L/D=1.5, Hot, Friction=0, Vel=1mm/s." },
   "Copper_1.5_0_10_Hot": { id: "o3d1OZV04Vs", desc: "Copper, L/D=1.5, Hot, Friction=0, Vel=10mm/s." },
   "Copper_1.5_Medium_1_Hot": { id: "_jsQorIS0sA", desc: "Copper, L/D=1.5, Hot, Friction=Medium, Vel=1mm/s." },
   "Copper_1.5_Medium_10_Hot": { id: "0pay20CNuqE", desc: "Copper, L/D=1.5, Hot, Friction=Medium, Vel=10mm/s." },
   "Copper_1.5_High_1_Hot": { id: "taxc6HEzIlY", desc: "Copper, L/D=1.5, Hot, Friction=High, Vel=1mm/s." },
   "Copper_1.5_High_10_Hot": { id: "JRCZrs8tG74", desc: "Copper, L/D=1.5, Hot, Friction=High, Vel=10mm/s." },
+
   "Copper_2_0_1_Hot": { id: "0mB_ndEAytw", desc: "Copper, L/D=2, Hot, Friction=0, Vel=1mm/s." },
   "Copper_2_0_10_Hot": { id: "9NPLr_SUXpI", desc: "Copper, L/D=2, Hot, Friction=0, Vel=10mm/s." },
   "Copper_2_Medium_1_Hot": { id: "fHqhpOZbA40", desc: "Copper, L/D=2, Hot, Friction=Medium, Vel=1mm/s." },
@@ -373,30 +167,35 @@ const simData = {
   "Titanium_1_Medium_10_Cold": { id: "Taf0WhgtBKo", desc: "Titanium, Cold, L/D=1, Friction=Medium, Vel=10mm/s. Max Forging force: 314.21 tonnes." },
   "Titanium_1_High_1_Cold": { id: "xCgR1SD4jwk", desc: "Titanium, Cold, L/D=1, Friction=High, Vel=1mm/s. Max Forging force: 319.38 tonnes." },
   "Titanium_1_High_10_Cold": { id: "TQe8JStfduk", desc: "Titanium, Cold, L/D=1, Friction=High, Vel=10mm/s. Max Forging force: 332.6 tonnes." },
+
   "Titanium_1.5_0_1_Cold": { id: "FjkdIMCyu5Q", desc: "Titanium, Cold, L/D=1.5, Friction=0, Vel=1mm/s. Max Forging force: 288.51 tonnes." },
   "Titanium_1.5_0_10_Cold": { id: "-nPrKRmkEIg", desc: "Titanium, Cold, L/D=1.5, Friction=0, Vel=10mm/s. Max Forging force: 299.8 tonnes." },
   "Titanium_1.5_Medium_1_Cold": { id: "GKEeXYyHAVM", desc: "Titanium, Cold, L/D=1.5, Friction=Medium, Vel=1mm/s. Max Forging force: 294.57 tonnes." },
   "Titanium_1.5_Medium_10_Cold": { id: "JThVT6N_eJ4", desc: "Titanium, Cold, L/D=1.5, Friction=Medium, Vel=10mm/s. Max Forging force: 305.86 tonnes." },
   "Titanium_1.5_High_1_Cold": { id: "3En5EirPTOE", desc: "Titanium, Cold, L/D=1.5, Friction=High, Vel=1mm/s. Max Forging force: 293.58 tonnes." },
   "Titanium_1.5_High_10_Cold": { id: "SwvMYmyyCaI", desc: "Titanium, Cold, L/D=1.5, Friction=High, Vel=10mm/s. Max Forging force: 305.18 tonnes." },
+
   "Titanium_2_0_1_Cold": { id: "KpmZCFJi-KI", desc: "Titanium, Cold, L/D=2, Friction=0, Vel=1mm/s. Max Forging force: 288.26 tonnes." },
   "Titanium_2_0_10_Cold": { id: "BR3OMtcBdXs", desc: "Titanium, Cold, L/D=2, Friction=0, Vel=10mm/s. Max Forging force: 299.43 tonnes." },
   "Titanium_2_Medium_1_Cold": { id: "QgEPw72sSGo", desc: "Titanium, Cold, L/D=2, Friction=Medium, Vel=1mm/s." },
   "Titanium_2_Medium_10_Cold": { id: "DbB8rqK3bAE", desc: "Titanium, Cold, L/D=2, Friction=Medium, Vel=10mm/s. Max Forging force: 302.64 tonnes." },
   "Titanium_2_High_1_Cold": { id: "PuYSCnGnGe8", desc: "Titanium, Cold, L/D=2, Friction=High, Vel=1mm/s. Max Forging force: 285.51 tonnes." },
   "Titanium_2_High_10_Cold": { id: "srR8j2VD1ko", desc: "Titanium, Cold, L/D=2, Friction=High, Vel=10mm/s. Max Forging force: 295.57 tonnes." },
+
   "Titanium_1_0_1_Hot": { id: "C7hograMpFQ", desc: "Titanium, Hot, L/D=1, Friction=0, Vel=1mm/s. Max Forging force: 422.02 tonnes." },
   "Titanium_1_0_10_Hot": { id: "TVa6a4wQjIk", desc: "Titanium, Hot, L/D=1, Friction=0, Vel=10mm/s. Max Forging force: 570.96 tonnes." },
   "Titanium_1_Medium_1_Hot": { id: "TSJYyWwxMMI", desc: "Titanium, Hot, L/D=1, Friction=Medium, Vel=1mm/s. Max Forging force: 428.6 tonnes." },
   "Titanium_1_Medium_10_Hot": { id: "EX4Pu5u1CXc", desc: "Titanium, Hot, L/D=1, Friction=Medium, Vel=10mm/s. Max Forging force: 579.55 tonnes." },
   "Titanium_1_High_1_Hot": { id: "oQPJGh82sDU", desc: "Titanium, Hot, L/D=1, Friction=High, Vel=1mm/s. Max Forging force: 442.64 tonnes." },
   "Titanium_1_High_10_Hot": { id: "XsyECrVwaH4", desc: "Titanium, Hot, L/D=1, Friction=High, Vel=10mm/s. Max Forging force: 601.92 tonnes." },
+
   "Titanium_1.5_0_1_Hot": { id: "WuHbQH7q5q8", desc: "Titanium, Hot, L/D=1.5, Friction=0, Vel=1mm/s. Max Forging force: 397.43 tonnes." },
   "Titanium_1.5_0_10_Hot": { id: "V0DbzGMmT70", desc: "Titanium, Hot, L/D=1.5, Friction=0, Vel=10mm/s. Max Forging force: 537.06 tonnes." },
   "Titanium_1.5_Medium_1_Hot": { id: "NRHlK6eadcA", desc: "Titanium, Hot, L/D=1.5, Friction=Medium, Vel=1mm/s. Max Forging force: 401.33 tonnes." },
   "Titanium_1.5_Medium_10_Hot": { id: "wVcc_XgsCXE", desc: "Titanium, Hot, L/D=1.5, Friction=Medium, Vel=10mm/s. Max Forging force: 542.3 tonnes." },
   "Titanium_1.5_High_1_Hot": { id: "-bJlYuG0rXU", desc: "Titanium, Hot, L/D=1.5, Friction=High, Vel=1mm/s. Max Forging force: 408.27 tonnes." },
   "Titanium_1.5_High_10_Hot": { id: "zekdJ8Syzoo", desc: "Titanium, Hot, L/D=1.5, Friction=High, Vel=10mm/s. Max Forging force: 551.45 tonnes." },
+
   "Titanium_2_0_1_Hot": { id: "8hVICoUZwZ8", desc: "Titanium, Hot, L/D=2, Friction=0, Vel=1mm/s. Max Forging force: 382.71 tonnes." },
   "Titanium_2_0_10_Hot": { id: "Na_xhSr9oz0", desc: "Titanium, Hot, L/D=2, Friction=0, Vel=10mm/s. Max Forging force: 516.91 tonnes." },
   "Titanium_2_Medium_1_Hot": { id: "LgG3TRYhvxk", desc: "Titanium, Hot, L/D=2, Friction=Medium, Vel=1mm/s. Max Forging force: 385.49 tonnes." },
@@ -411,30 +210,35 @@ const simData = {
   "Steel_1_Medium_10_Cold": { id: "tmesU6g64Jg", desc: "Steel, L/D=1, Cold, Friction=Medium, Vel=10mm/s." },
   "Steel_1_High_1_Cold": { id: "SbhH_bDdFD4", desc: "Steel, L/D=1, Cold, Friction=High, Vel=1mm/s." },
   "Steel_1_High_10_Cold": { id: "itZ8CE-ySL0", desc: "Steel, L/D=1, Cold, Friction=High, Vel=10mm/s." },
+  
   "Steel_1.5_0_1_Cold": { id: "dFV212X4EbU", desc: "Steel, L/D=1.5, Cold, Friction=0, Vel=1mm/s." },
   "Steel_1.5_0_10_Cold": { id: "awXCDbTGcQk", desc: "Steel, L/D=1.5, Cold, Friction=0, Vel=10mm/s." },
   "Steel_1.5_Medium_1_Cold": { id: "BzUoMy5eRAc", desc: "Steel, L/D=1.5, Cold, Friction=Medium, Vel=1mm/s." },
   "Steel_1.5_Medium_10_Cold": { id: "Yn9s1omttIg", desc: "Steel, L/D=1.5, Cold, Friction=Medium, Vel=10mm/s." },
   "Steel_1.5_High_1_Cold": { id: "mA-f4MSfqfE", desc: "Steel, L/D=1.5, Cold, Friction=High, Vel=1mm/s." },
   "Steel_1.5_High_10_Cold": { id: "cx8B1djAaP4", desc: "Steel, L/D=1.5, Cold, Friction=High, Vel=10mm/s." },
+
   "Steel_2_0_1_Cold": { id: "pNrMJi9g2Ss", desc: "Steel, L/D=2, Cold, Friction=0, Vel=1mm/s." },
   "Steel_2_0_10_Cold": { id: "z6nu_JI3gCs", desc: "Steel, L/D=2, Cold, Friction=0, Vel=10mm/s." },
   "Steel_2_Medium_1_Cold": { id: "TnjvYth0p7E", desc: "Steel, L/D=2, Cold, Friction=Medium, Vel=1mm/s." },
   "Steel_2_Medium_10_Cold": { id: "NYsxjOAG7Fw", desc: "Steel, L/D=2, Cold, Friction=Medium, Vel=10mm/s." },
   "Steel_2_High_1_Cold": { id: "yj1REUz7nWk", desc: "Steel, L/D=2, Cold, Friction=High, Vel=1mm/s." },
   "Steel_2_High_10_Cold": { id: "XI5j39mEkz0", desc: "Steel, L/D=2, Cold, Friction=High, Vel=10mm/s." },
+
   "Steel_1_0_1_Hot": { id: "3AXtLK-MJfc", desc: "Steel, L/D=1, Hot, Friction=0, Vel=1mm/s." },
   "Steel_1_0_10_Hot": { id: "vncZKAOy-c8", desc: "Steel, L/D=1, Hot, Friction=0, Vel=10mm/s." },
   "Steel_1_Medium_1_Hot": { id: "fHtnFgRSTHE", desc: "Steel, L/D=1, Hot, Friction=Medium, Vel=1mm/s." },
   "Steel_1_Medium_10_Hot": { id: "hI89sBaUzbw", desc: "Steel, L/D=1, Hot, Friction=Medium, Vel=10mm/s." },
   "Steel_1_High_1_Hot": { id: "4K6WIaRxKBc", desc: "Steel, L/D=1, Hot, Friction=High, Vel=1mm/s." },
   "Steel_1_High_10_Hot": { id: "CCJI1a-Ap1c", desc: "Steel, L/D=1, Hot, Friction=High, Vel=10mm/s." },
+
   "Steel_1.5_0_1_Hot": { id: "Lv-ddecIkqo", desc: "Steel, L/D=1.5, Hot, Friction=0, Vel=1mm/s." },
   "Steel_1.5_0_10_Hot": { id: "xM6nrXu5s8w", desc: "Steel, L/D=1.5, Hot, Friction=0, Vel=10mm/s." },
   "Steel_1.5_Medium_1_Hot": { id: "oAyIHMk9K_M", desc: "Steel, L/D=1.5, Hot, Friction=Medium, Vel=1mm/s." },
   "Steel_1.5_Medium_10_Hot": { id: "KGju7NSC988", desc: "Steel, L/D=1.5, Hot, Friction=Medium, Vel=10mm/s." },
   "Steel_1.5_High_1_Hot": { id: "-NS5XhgSCjo", desc: "Steel, L/D=1.5, Hot, Friction=High, Vel=1mm/s." },
   "Steel_1.5_High_10_Hot": { id: "xfyMzLkhQks", desc: "Steel, L/D=1.5, Hot, Friction=High, Vel=10mm/s." },
+
   "Steel_2_0_1_Hot": { id: "Nx8HGU3YxsA", desc: "Steel, L/D=2, Hot, Friction=0, Vel=1mm/s." },
   "Steel_2_0_10_Hot": { id: "TWFe6qYSf_c", desc: "Steel, L/D=2, Hot, Friction=0, Vel=10mm/s." },
   "Steel_2_Medium_1_Hot": { id: "8FklVq_TRZ8", desc: "Steel, L/D=2, Hot, Friction=Medium, Vel=1mm/s." },
@@ -455,61 +259,34 @@ document.getElementById('simForm').addEventListener('submit', function(e) {
   const mw = formData.get('mw');
 
   if(!mat || !ld || !fr || !udie || !mw) {
-    alert("Please select all options to run the simulation.");
+    alert("Please select all options!");
     return;
   }
 
   // Construct the key
   const key = `${mat}_${ld}_${fr}_${udie}_${mw}`;
+  
   const result = simData[key];
+  const resultArea = document.getElementById('result-area');
+  const videoFrame = document.getElementById('simVideo');
+  const descBox = document.getElementById('simDesc');
 
   if (result) {
-    openModal(result);
+    resultArea.style.display = 'block';
+    videoFrame.src = "https://www.youtube.com/embed/" + result.id + "?autoplay=1";
+    descBox.textContent = result.desc || "Simulation loaded successfully. Observe the forging force evolution graph and temperature/strain scales.";
+    // Scroll to result
+    resultArea.scrollIntoView({behavior: "smooth"});
   } else {
     alert("Simulation data not found for this specific combination.");
+    resultArea.style.display = 'none';
   }
 });
 
-function openModal(result) {
-    const modal = document.getElementById('videoModal');
-    const videoFrame = document.getElementById('simVideo');
-    const descBox = document.getElementById('simDesc');
-    
-    // Set content
-    videoFrame.src = "https://www.youtube.com/embed/" + result.id + "?autoplay=1";
-    descBox.textContent = result.desc || "Simulation result loaded.";
-    
-    // Show modal
-    modal.style.display = "block";
-    
-    // Disable body scroll
-    document.body.style.overflow = "hidden";
+function resetSim() {
+  document.getElementById('simForm').reset();
+  document.getElementById('result-area').style.display = 'none';
+  document.getElementById('simVideo').src = "";
+  document.getElementById('simDesc').textContent = "";
 }
-
-function closeModal(event) {
-    // If event is null (called by button) OR event.target is the overlay itself (click outside)
-    if (event === null || event.target.id === 'videoModal') {
-        const modal = document.getElementById('videoModal');
-        const videoFrame = document.getElementById('simVideo');
-        
-        // Hide modal
-        modal.style.display = "none";
-        
-        // Stop video by clearing src
-        videoFrame.src = "";
-        
-        // Re-enable body scroll
-        document.body.style.overflow = "auto";
-    }
-}
-
-// Close modal on Escape key press
-document.addEventListener('keydown', function(event) {
-    if (event.key === "Escape") {
-        closeModal(null);
-    }
-});
 </script>
-
-</body>
-</html>
