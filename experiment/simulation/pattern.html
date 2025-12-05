@@ -1,1 +1,108 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Virtual Lab | Video Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Optional Google Font (still single HTML file, CSS is inline) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/video_case.css">
+</head>
+<body>
+  <main class="page">
+    <section class="shell">
+      <header class="header">
+        <div class="logo-wrapper">
+          <img src="images/deiLogo.jpg" alt="Virtual Lab Logo" class="logo" />
+        </div>
+        <div class="header-text">
+          <div class="header-title">
+            Virtual Lab
+            <span class="header-pill">Simulation Environment</span>
+          </div>
+          <div class="header-subtitle">
+            Advanced <span>Interactive Learning</span> for Manufacturing Processes
+          </div>
+        </div>
+      </header>
+
+      <article class="video-card">
+        <div class="video-wrapper">
+          <video width="1020" height="592" autoplay loop controls>
+<source src="UPSETTING/Applications/PatternMaking.mp4" type="video/mp4">
+</video>
+
+          <div class="video-glow"></div>
+          </div>
+
+        <div class="video-info">
+          <div class="video-label">
+            <span class="video-label-dot"></span>
+            Featured Experiment
+          </div>
+
+          <h1 class="video-title" id="videoTitle">
+            To study the pattern making process.
+          </h1>
+
+          <div class="video-meta">
+            <div class="meta-pill">
+              <span class="meta-dot"></span>
+              Manufacturing Technology
+            </div>
+            <div class="meta-pill">
+              1080p · Responsive Player
+            </div>
+          </div>
+
+          <p class="video-description" id="videoDescription">
+Patterns used in sand casting may be made of wood, metal, plastics or other materials. Patterns are made to exacting standards of construction, so that they can last for a reasonable length of time, and so that they will repeatably provide a dimensionally acceptable casting. In the video, one could see a picture which has sectioned view explaining about the arrangement to create hollow cavity for casting. The pattern is shown in brown which is placed in the cope and drag. The video shows the method of making the pattern of 3 way valve. The die having a hollow cavity of the shape of 3 way valve is shown in green. The billet is shown in red and plunger is shown in yellow. As the plunger proceeds it deforms the billet and fills the cavity inside the hollow die taking the shape of the pattern which is shown at the end of video.
+          </p>
+
+          <div class="footer-strip">
+            <div class="footer-left">
+              <span class="status-dot"></span>
+              <span>Live · Virtual Lab Session</span>
+            </div>
+            <div class="footer-right">
+              v1.0 · DayalBagh Educational Institute MWD
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    // Simple entrance animation trigger
+    document.addEventListener("DOMContentLoaded", function () {
+      document.body.classList.add("page-loaded");
+    });
+
+    // Optional: small text "typing" effect for video title
+    (function typeTitle() {
+      const titleEl = document.getElementById("videoTitle");
+      if (!titleEl) return;
+
+      // Adjusted for faster typing on light theme
+      const fullText = titleEl.textContent.trim();
+      let index = 0;
+      titleEl.textContent = "";
+
+      function type() {
+        index++;
+        titleEl.textContent = fullText.slice(0, index);
+        if (index < fullText.length) {
+          // Slightly faster typing speed
+          const delay = index < 8 ? 60 : 20; 
+          setTimeout(type, delay);
+        }
+      }
+
+      setTimeout(type, 300);
+    })();
+  </script>
+</body>
+</html>
