@@ -34,8 +34,10 @@ One important variable that affects the forming process is press ram speed.
 </table>
 
 <h4>Simulation Video</h4>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/HLS6QvxQp00?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<!--<iframe width="600" height="400" src="https://www.youtube.com/embed/HLS6QvxQp00?rel=0" frameborder="0" allowfullscreen></iframe>-->
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HYD_AL_HOT_F0_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <h3>FORCE DURING UPSETTING PROCESS (Hydraulic)</h3>
@@ -50,8 +52,10 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hydraulic</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/VwXtx_7IRgM?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<!--<iframe width="600" height="400" src="https://www.youtube.com/embed/VwXtx_7IRgM?rel=0" frameborder="0" allowfullscreen></iframe>-->
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HYD_AL_HOT_F0_LD1_V1_G.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <table border="1" cellspacing="0" cellpadding="6">
@@ -64,7 +68,10 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hydraulic</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/FwpdehmcQn0?rel=0" frameborder="0" allowfullscreen></iframe>
+<!--<iframe width="600" height="400" src="https://www.youtube.com/embed/FwpdehmcQn0?rel=0" frameborder="0" allowfullscreen></iframe>-->
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HYD_STEEL_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 
 <hr>
 
@@ -78,10 +85,13 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hydraulic</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/56SHjqKi1zY?rel=0" frameborder="0" allowfullscreen></iframe>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HYD_TI_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 <br><br>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/I2WBYXNFEsc?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HYD_CU_HOT_F0_LD1_V1_g.mp4" type="video/mp4">
+</video><br>
 <hr>
 
 <h2>MECHANICAL PRESS SIMULATION</h2>
@@ -97,7 +107,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Mechanical</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/DVMsXEO_g-o?rel=0" frameborder="0" allowfullscreen></iframe>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_MEC_AL_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 
 <hr>
 
@@ -113,8 +125,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Mechanical</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/8ZmAwo068g4?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_MEC_AL_HOT_FM_LD1_V1_g.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <table border="1" cellspacing="0" cellpadding="6">
@@ -127,7 +140,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Mechanical</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/lsR5yypQkuk?rel=0" frameborder="0" allowfullscreen></iframe>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_MEC_STEEL_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 
 <hr>
 
@@ -141,9 +156,12 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Mechanical</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/bzPxZ1uG7m8?rel=0" frameborder="0" allowfullscreen></iframe>
-<br><br>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/VjzBCP-Fa60?rel=0" frameborder="0" allowfullscreen></iframe>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_MEC_STEEL_HOT_FM_LD1_V1_g.mp4" type="video/mp4">
+</video></center><br><br>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_MEC_CU_HOT_F0_LD1_V1_g.mp4" type="video/mp4">
+</video><br><br>
 
 <hr>
 
@@ -160,8 +178,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hammer</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/yu1c8__rnio?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HAM_AL_HOT_FM_LD1_V1_g.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <h3>FORCE DURING UPSETTING PROCESS (Hammer)</h3>
@@ -176,8 +195,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hammer</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/LRFtO2fTvmA?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HAM_AL_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <table border="1" cellspacing="0" cellpadding="6">
@@ -190,8 +210,9 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hammer</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/l02ZZkeHC0E?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HAM_STEEL_HOT_FM_LD1_V1.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <table border="1" cellspacing="0" cellpadding="6">
@@ -204,16 +225,19 @@ One important variable that affects the forming process is press ram speed.
 <tr><td>Press</td><td>Hammer</td></tr>
 </table>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/3a_q_orQvgA?rel=0" frameborder="0" allowfullscreen></iframe>
-<br><br>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/mYS0nP3fUfo?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HAM_STEEL_HOT_FM_LD1_V1_g.mp4" type="video/mp4">
+</video></center><br><br>
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/U_HAM_CU_HOT_F0_LD1_V1_g.mp4" type="video/mp4">
+</video></center><br>
 <hr>
 
 <h2>COMPARISON VIDEO</h2>
 
-<iframe width="600" height="400" src="https://www.youtube.com/embed/8b5zd85WfHM?rel=0" frameborder="0" allowfullscreen></iframe>
-
+<center><video width="600" height="340" controls>
+<source src="simulation/UPSETTING/Upset_Sim/Special.mp4" type="video/mp4">
+</video></center>
 </body>
 </html>
 
