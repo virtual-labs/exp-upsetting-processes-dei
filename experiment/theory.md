@@ -4,7 +4,7 @@ Upset Forging or Upsetting is defined as 'free forming', by which a billet or a 
 <br>
 <center>
 <img src="images/Upsetting/UpsetProcess.jpg" alt="Scrap"><br>Figure 1: Upsetting process<br><br></center>
-<video width="600" height="340" controls>
+<center><video width="600" height="340" controls>
 <source src="simulation/UPSETTING/UPSET.mp4" type="video/mp4">
 </video></center><br><!--<iframe width="600" height="400" src="https://www.youtube.com/embed/kqJR-_fp8AY?rel=0" frameborder="0" allowfullscreen></iframe>-->
 <br>
