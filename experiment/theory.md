@@ -4,7 +4,9 @@ Upset Forging or Upsetting is defined as 'free forming', by which a billet or a 
 <br>
 <center>
 <img src="images/Upsetting/UpsetProcess.jpg" alt="Scrap"><br>Figure 1: Upsetting process<br><br></center>
-<iframe width="600" height="400" src="https://www.youtube.com/embed/kqJR-_fp8AY?rel=0" frameborder="0" allowfullscreen></iframe>
+<video width="600" height="340" controls>
+<source src="simulation/UPSETTING/UPSET.mp4" type="video/mp4">
+</video></center><br><!--<iframe width="600" height="400" src="https://www.youtube.com/embed/kqJR-_fp8AY?rel=0" frameborder="0" allowfullscreen></iframe>-->
 <br>
 In upsetting a rigid tool is pushed onto a block of material (billet). The material is free to move at the right hand side.  Successful upsetting mainly depends on two process limitations: <br> <br><b>1.Upset strain :</b> that affects the forming limit or forgeability of the workpiece material<br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h<sub>0</sub><br><span class="oline">&epsilon;</span>&nbsp=&nbsp;ln&nbsp;&nbsp;&mdash;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h<sub>1</sub><br><br><b> 2. Upset Ratio (Ru):</b> that affects the buckling of the workpiece <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;h<sub>0</sub><br>R<sub>u</sub>&nbsp;&nbsp;=&nbsp;&nbsp;<strike>&nbsp;&nbsp;&nbsp;&nbsp;</strike><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d<sub>0</sub>
 <br>
