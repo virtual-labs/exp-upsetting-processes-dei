@@ -20,7 +20,7 @@ One important variable that affects the forming process is press ram speed.
 
 <hr>
 
-<h3>HYDRAULIC PRESS SIMULATION</h3></center>
+<h2 style="text-align: center;">HYDRAULIC PRESS SIMULATION</h2>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -94,7 +94,7 @@ One important variable that affects the forming process is press ram speed.
 </video><br>
 <hr>
 
-<h3>MECHANICAL PRESS SIMULATION</h3>
+<h2>MECHANICAL PRESS SIMULATION</h2>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -165,7 +165,7 @@ One important variable that affects the forming process is press ram speed.
 
 <hr>
 
-<h3>HAMMER PRESS SIMULATION</h3>
+<h2>HAMMER PRESS SIMULATION</h2>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -233,7 +233,7 @@ One important variable that affects the forming process is press ram speed.
 </video></center><br>
 <hr>
 
-<h3>COMPARISON VIDEO</h3>
+<h2>COMPARISON VIDEO</h2>
 
 <center><video width="600" height="340" controls>
 <source src="simulation/UPSETTING/Upset_Sim/Special.mp4" type="video/mp4">
