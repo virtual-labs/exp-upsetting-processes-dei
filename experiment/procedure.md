@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<h3>Upsetting Process — Simulation & Variables</h3>
+<h2>Variables in Upset Forging Process</h2>
 <hr>
 
 <h3>EFFECT OF FORGING EQUIPMENT ON FORGING PROCESS</h3>
@@ -20,7 +20,7 @@ One important variable that affects the forming process is press ram speed.
 
 <hr>
 
-<h2>HYDRAULIC PRESS SIMULATION</h2>
+<h3>HYDRAULIC PRESS SIMULATION</h3></center>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -94,7 +94,7 @@ One important variable that affects the forming process is press ram speed.
 </video><br>
 <hr>
 
-<h2>MECHANICAL PRESS SIMULATION</h2>
+<h3>MECHANICAL PRESS SIMULATION</h3>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -113,7 +113,7 @@ One important variable that affects the forming process is press ram speed.
 
 <hr>
 
-<h3>FORCE DURING UPSETTING PROCESS (Mechanical)</h3>
+<h3 style="text-align: left;">FORCE DURING UPSETTING PROCESS (Mechanical)</h3>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><td>Material</td><td>CK45</td></tr>
@@ -165,7 +165,7 @@ One important variable that affects the forming process is press ram speed.
 
 <hr>
 
-<h2>HAMMER PRESS SIMULATION</h2>
+<h3>HAMMER PRESS SIMULATION</h3>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><th>Variable</th><th>Value</th></tr>
@@ -183,7 +183,7 @@ One important variable that affects the forming process is press ram speed.
 </video></center><br>
 <hr>
 
-<h3>FORCE DURING UPSETTING PROCESS (Hammer)</h3>
+<h3 style="text-align: left;">FORCE DURING UPSETTING PROCESS (Hammer)</h3>
 
 <table border="1" cellspacing="0" cellpadding="6">
 <tr><td>Material</td><td>CK45</td></tr>
@@ -233,7 +233,7 @@ One important variable that affects the forming process is press ram speed.
 </video></center><br>
 <hr>
 
-<h2>COMPARISON VIDEO</h2>
+<h3>COMPARISON VIDEO</h3>
 
 <center><video width="600" height="340" controls>
 <source src="simulation/UPSETTING/Upset_Sim/Special.mp4" type="video/mp4">
