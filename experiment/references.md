@@ -1,8 +1,3 @@
-## References: Upsetting Process in Manufacturing
-
-This document lists standard textbooks, research papers, journals, and online resources related to the **Upsetting Process**, a key metal forming operation in manufacturing and forging.
-
----
 
 ### 1. Standard Textbooks
 
@@ -102,6 +97,4 @@ This document lists standard textbooks, research papers, journals, and online re
 Example:  
 > S. Kalpakjian and S. R. Schmid, *Manufacturing Processes for Engineering Materials*, Pearson Education, 2014.
 
----
 
-*End of Document*
