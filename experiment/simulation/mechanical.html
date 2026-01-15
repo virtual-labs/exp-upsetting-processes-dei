@@ -196,13 +196,14 @@
         background: #000;
     }
 
-    .video-wrapper iframe {
+    /* UPDATED: Style for the HTML5 Video tag instead of iframe */
+    .video-wrapper video {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border: 0;
+        object-fit: contain;
     }
 
     .description-bar {
@@ -214,6 +215,7 @@
         line-height: 1.7;
         max-height: 200px;
         overflow-y: auto;
+        text-align: justify;
     }
 
     @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
@@ -227,8 +229,8 @@
         <h2 class="simulation-title">Interactive Simulation Bench for Mechanical Press</h2>
         <p class="simulation-subtitle">Select parameters below to visualize the upsetting process.</p>
         
+        
 
-[Image of mechanical press components diagram]
 
     </div>
 
@@ -287,130 +289,144 @@
             <span class="close-btn" onclick="closeModal(null)">&times;</span>
         </div>
         <div class="video-wrapper">
-            <iframe id="simVideo" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <video id="simVideo" controls controlsList="nodownload">
+                <source id="videoSource" src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
         <div class="description-bar" id="simDesc">
-            </div>
+        </div>
     </div>
 </div>
 
 <script>
-// Data mapping for Mechanical Press
+// Data mapping extracted from the original PHP logic
 // Key format: Material_LD_Friction_Temp
 const simData = {
-    // --- ALUMINIUM COLD ---
-    "Aluminium_1_0_Cold": { id: "Xp-Bq2lL-tU", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=0. Graph shows forging force vs pilot height. Left scale shows temperature." },
-    "Aluminium_1_Medium_Cold": { id: "yQbZ9YpEnxQ", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=Medium. Velocity 1mm/sec." },
-    "Aluminium_1_High_Cold": { id: "-tC7YlVtDhA", desc: "Mechanical Press | Aluminium | L/D=1 | Cold | Friction=High. Velocity 1mm/sec." },
-    
-    "Aluminium_1.5_0_Cold": { id: "3D2q8X4c0AU", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=0. Velocity 1mm/sec." },
-    "Aluminium_1.5_Medium_Cold": { id: "svUA3cyiI7M", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=Medium. Velocity 1mm/sec." },
-    "Aluminium_1.5_High_Cold": { id: "FZ5U-ttRsMM", desc: "Mechanical Press | Aluminium | L/D=1.5 | Cold | Friction=High. Velocity 1mm/sec." },
+    // ================= ALUMINIUM COLD =================
+    "Aluminium_1_0_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1/al_mechanical_cold_f0_ld1.mp4", 
+        desc: "The metal forming video shows the upsetting operation taking place using Mechanical Press. The initial billet of Aluminium having L/D ratio=1 is taken cold (cold upsetting). Zero friction (for billet and dies) is shown on the top end in the video. The upper die presses with lower die stationary. On the right hand side one could see the graph of forging force on upper die vs. pilot height showing the forging force evolution during upsetting process for 50% deformation. The scale on left hand side describes the temperature in billet changing during the process." 
+    },
+    "Aluminium_1_Medium_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1/al_mechanical_cold_fm_ld1.mp4", 
+        desc: "The video shows the upsetting operation taking place using Mechanical Press. The initial billet of Aluminium having L/D ratio=1 is taken cold. Medium friction. Velocity 1mm/sec." 
+    },
+    "Aluminium_1_High_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1/al_mechanical_cold_fh_ld1.mp4", 
+        desc: "The video shows the upsetting operation taking place using Mechanical Press. The initial billet of Aluminium having L/D ratio=1 is taken cold. High friction. Velocity 1mm/sec." 
+    },
+    "Aluminium_1.5_0_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1P5/al_mechanical_cold_f0_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Aluminium_1.5_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1P5/al_mechanical_cold_fm_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Aluminium_1.5_High_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD1P5/al_mechanical_cold_fh_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Cold | Friction=High. Shows force graph and temperature scale." },
+    "Aluminium_2_0_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD2/al_mechanical_cold_f0_ld2.mp4", desc: "Aluminium | L/D=2 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Aluminium_2_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD2/al_mechanical_cold_fm_ld2.mp4", desc: "Aluminium | L/D=2 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Aluminium_2_High_Cold": { path: "UPSETTING/Mech_Upsetting/Al_Cold_LD2/al_mechanical_cold_fh_ld2.mp4", desc: "Aluminium | L/D=2 | Cold | Friction=High. Shows force graph and temperature scale." },
 
-    "Aluminium_2_0_Cold": { id: "b-EM1WXqR3c", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=0. Velocity 1mm/sec." },
-    "Aluminium_2_Medium_Cold": { id: "aYhK7EiTJXI", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=Medium. Velocity 1mm/sec." },
-    "Aluminium_2_High_Cold": { id: "bUeyEkV39so", desc: "Mechanical Press | Aluminium | L/D=2 | Cold | Friction=High. Velocity 1mm/sec." },
+    // ================= ALUMINIUM HOT =================
+    "Aluminium_1_0_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1/al_Mechanical_hot_f0_ld1.mp4", desc: "Aluminium | L/D=1 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Aluminium_1_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1/al_Mechanical_hot_fm_ld1.mp4", desc: "Aluminium | L/D=1 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Aluminium_1_High_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1/al_Mechanical_hot_fh_ld1.mp4", desc: "Aluminium | L/D=1 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Aluminium_1.5_0_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1P5/al_Mechanical_hot_f0_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Aluminium_1.5_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1P5/al_Mechanical_hot_fm_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Aluminium_1.5_High_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD1P5/al_Mechanical_hot_fh_ld1p5.mp4", desc: "Aluminium | L/D=1.5 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Aluminium_2_0_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD2/al_Mechanical_hot_f0_ld2.mp4", desc: "Aluminium | L/D=2 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Aluminium_2_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD2/al_Mechanical_hot_fm_ld2.mp4", desc: "Aluminium | L/D=2 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Aluminium_2_High_Hot": { path: "UPSETTING/Mech_Upsetting/Al_Hot_LD2/al_Mechanical_hot_fh_ld2.mp4", desc: "Aluminium | L/D=2 | Hot | Friction=High. Shows force graph and temperature scale." },
 
-    // --- ALUMINIUM HOT ---
-    "Aluminium_1_0_Hot": { id: "QGma60Qhw64", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=0." },
-    "Aluminium_1_Medium_Hot": { id: "y3alJ_RQSbM", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=Medium." },
-    "Aluminium_1_High_Hot": { id: "1fIeVnDiTsk", desc: "Mechanical Press | Aluminium | L/D=1 | Hot | Friction=High." },
+    // ================= COPPER COLD =================
+    "Copper_1_0_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1/cu_mechanical_cold_f0_ld1.mp4", desc: "Copper | L/D=1 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Copper_1_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1/cu_mechanical_cold_fm_ld1.mp4", desc: "Copper | L/D=1 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Copper_1_High_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1/cu_mechanical_cold_fh_ld1.mp4", desc: "Copper | L/D=1 | Cold | Friction=High. Shows force graph and temperature scale." },
+    "Copper_1.5_0_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1P5/cu_mechanical_cold_f0_ld1p5.mp4", desc: "Copper | L/D=1.5 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Copper_1.5_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1P5/cu_mechanical_cold_fm_ld1p5.mp4", desc: "Copper | L/D=1.5 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Copper_1.5_High_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD1P5/cu_mechanical_cold_fh_ld1p5.mp4", desc: "Copper | L/D=1.5 | Cold | Friction=High. Shows force graph and temperature scale." },
+    "Copper_2_0_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD2/cu_mechanical_cold_f0_ld2.mp4", desc: "Copper | L/D=2 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Copper_2_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD2/cu_mechanical_cold_fm_ld2.mp4", desc: "Copper | L/D=2 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Copper_2_High_Cold": { path: "UPSETTING/Mech_Upsetting/Cu_Cold_LD2/cu_mechanical_cold_fh_ld2.mp4", desc: "Copper | L/D=2 | Cold | Friction=High. Shows force graph and temperature scale." },
 
-    "Aluminium_1.5_0_Hot": { id: "6VoZcYjsFpY", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=0." },
-    "Aluminium_1.5_Medium_Hot": { id: "C8hOS2AeNoo", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=Medium." },
-    "Aluminium_1.5_High_Hot": { id: "vSyVHJhjXqo", desc: "Mechanical Press | Aluminium | L/D=1.5 | Hot | Friction=High." },
+    // ================= COPPER HOT =================
+    "Copper_1_0_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1/cu_Mechanical_hot_f0_ld1.mp4", desc: "Copper | L/D=1 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Copper_1_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1/cu_Mechanical_hot_fm_ld1.mp4", desc: "Copper | L/D=1 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Copper_1_High_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1/cu_Mechanical_hot_fh_ld1.mp4", desc: "Copper | L/D=1 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Copper_1.5_0_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1P5/cu_Mechanical_hot_f0_ld1p5.mp4", desc: "Copper | L/D=1.5 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Copper_1.5_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1P5/cu_Mechanical_hot_fm_ld1p5.mp4", desc: "Copper | L/D=1.5 | Hot | Friction=Medium. Note: Scale shows equivalent strain." },
+    "Copper_1.5_High_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD1P5/cu_Mechanical_hot_fh_ld1p5.mp4", desc: "Copper | L/D=1.5 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Copper_2_0_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD2/cu_Mechanical_hot_f0_ld2.mp4", desc: "Copper | L/D=2 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Copper_2_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD2/cu_Mechanical_hot_fm_ld2.mp4", desc: "Copper | L/D=2 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Copper_2_High_Hot": { path: "UPSETTING/Mech_Upsetting/Cu_Hot_LD2/cu_Mechanical_hot_fh_ld2.mp4", desc: "Copper | L/D=2 | Hot | Friction=High. Shows force graph and temperature scale." },
 
-    "Aluminium_2_0_Hot": { id: "bBcvUfSyuOE", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=0." },
-    "Aluminium_2_Medium_Hot": { id: "eeOnx0_h98Y", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=Medium." },
-    "Aluminium_2_High_Hot": { id: "_q2EcobGsZg", desc: "Mechanical Press | Aluminium | L/D=2 | Hot | Friction=High." },
+    // ================= STEEL COLD =================
+    "Steel_1_0_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1/Mechanical_STEEL_COLD_F0_LD1.mp4", desc: "Steel | L/D=1 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Steel_1_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1/Mechanical_STEEL_COLD_FM_LD1.mp4", desc: "Steel | L/D=1 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_1_High_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1/Mechanical_STEEL_COLD_FH_LD1.mp4", desc: "Steel | L/D=1 | Cold | Friction=High. Shows force graph and temperature scale." },
+    "Steel_1.5_0_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1P5/Mechanical_STEEL_COLD_F0_LD1P5.mp4", desc: "Steel | L/D=1.5 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Steel_1.5_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1P5/Mechanical_STEEL_COLD_FM_LD1P5.mp4", desc: "Steel | L/D=1.5 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_1.5_High_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD1P5/Mechanical_STEEL_COLD_FH_LD1P5.mp4", desc: "Steel | L/D=1.5 | Cold | Friction=High. Shows force graph and temperature scale." },
+    "Steel_2_0_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD2/Mechanical_STEEL_COLD_F0_ld2.mp4", desc: "Steel | L/D=2 | Cold | Friction=0. Shows force graph and temperature scale." },
+    "Steel_2_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD2/Mechanical_STEEL_COLD_FM_ld2.mp4", desc: "Steel | L/D=2 | Cold | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_2_High_Cold": { path: "UPSETTING/Mech_Upsetting/Steel_Cold_LD2/Mechanical_STEEL_COLD_FH_ld2.mp4", desc: "Steel | L/D=2 | Cold | Friction=High. Shows force graph and temperature scale." },
 
-    // --- COPPER COLD ---
-    "Copper_1_0_Cold": { id: "Ay_e6inSNJ4", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=0." },
-    "Copper_1_Medium_Cold": { id: "KHFSna3WYGY", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=Medium." },
-    "Copper_1_High_Cold": { id: "2eUVrt19Dpc", desc: "Mechanical Press | Copper | L/D=1 | Cold | Friction=High." },
+    // ================= STEEL HOT =================
+    "Steel_1_0_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1/Mechanical_STEEL_HOT_F0_LD1.mp4", desc: "Steel | L/D=1 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Steel_1_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1/Mechanical_STEEL_HOT_FM_LD1.mp4", desc: "Steel | L/D=1 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_1_High_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1/Mechanical_STEEL_HOT_FH_LD1.mp4", desc: "Steel | L/D=1 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Steel_1.5_0_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1P5/Mechanical_STEEL_HOT_F0_LD1P5.mp4", desc: "Steel | L/D=1.5 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Steel_1.5_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1P5/Mechanical_STEEL_HOT_FM_LD1P5.mp4", desc: "Steel | L/D=1.5 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_1.5_High_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD1P5/Mechanical_STEEL_HOT_FH_LD1P5.mp4", desc: "Steel | L/D=1.5 | Hot | Friction=High. Shows force graph and temperature scale." },
+    "Steel_2_0_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD2/Mechanical_STEEL_HOT_F0_LD2.mp4", desc: "Steel | L/D=2 | Hot | Friction=0. Shows force graph and temperature scale." },
+    "Steel_2_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD2/Mechanical_STEEL_HOT_FM_LD2.mp4", desc: "Steel | L/D=2 | Hot | Friction=Medium. Shows force graph and temperature scale." },
+    "Steel_2_High_Hot": { path: "UPSETTING/Mech_Upsetting/Steel_Hot_LD2/Mechanical_STEEL_HOT_FH_LD2.mp4", desc: "Steel | L/D=2 | Hot | Friction=High. Shows force graph and temperature scale." },
 
-    "Copper_1.5_0_Cold": { id: "LZ_U6OxuACg", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=0." },
-    "Copper_1.5_Medium_Cold": { id: "SSlyvyUBxZU", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=Medium." },
-    "Copper_1.5_High_Cold": { id: "moPQ2nk5gDg", desc: "Mechanical Press | Copper | L/D=1.5 | Cold | Friction=High." },
+    // ================= TITANIUM COLD =================
+    "Titanium_1_0_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1/Mechanical_Ti_COLD_F0_LD1.mp4", 
+        desc: "Titanium Cold Upsetting (L/D=1, Friction=0). Max Force: 290.52 tonnes. Avg equivalent strain: 0.69. Axis symmetric simulation." 
+    },
+    "Titanium_1_Medium_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1/Mechanical_Ti_COLD_FM_LD1.mp4", 
+        desc: "Titanium Cold Upsetting (L/D=1, Friction=Medium). Initial Temp: 25C, Final Temp: 261.85C. Max Force: 302.06 tonnes." 
+    },
+    "Titanium_1_High_Cold": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1/Mechanical_Ti_COLD_FH_LD1.mp4", 
+        desc: "Titanium Cold Upsetting (L/D=1, Friction=High). Initial Temp: 25C, Final Temp: 316.71C. Max Force: 319.02 tonnes." 
+    },
+    "Titanium_1.5_0_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1P5/Mechanical_Ti_COLD_F0_LD1P5.mp4", desc: "Titanium Cold (L/D=1.5, F=0). Final Temp: 136.16C. Max Force: 211.09 tonnes." },
+    "Titanium_1.5_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1P5/Mechanical_Ti_COLD_FM_LD1P5.mp4", desc: "Titanium Cold (L/D=1.5, F=Medium). Final Temp: 137.83C. Max Force: 214.12 tonnes." },
+    "Titanium_1.5_High_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD1P5/Mechanical_Ti_COLD_FH_LD1P5.mp4", desc: "Titanium Cold (L/D=1.5, F=High). Final Temp: 166.21C. Max Force: 213.9 tonnes." },
+    "Titanium_2_0_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD2/Mechanical_Ti_COLD_F0_LD2.mp4", desc: "Titanium Cold (L/D=2, F=0). Final Temp: 99.82C. Max Force: 181.97 tonnes." },
+    "Titanium_2_Medium_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD2/Mechanical_Ti_COLD_FM_LD2.mp4", desc: "Titanium Cold (L/D=2, F=Medium). Final Temp: 109.51C. Max Force: 183.78 tonnes." },
+    "Titanium_2_High_Cold": { path: "UPSETTING/Mech_Upsetting/TI_Cold_LD2/Mechanical_Ti_COLD_FH_LD2.mp4", desc: "Titanium Cold (L/D=2, F=High). Final Temp: 115.50C. Max Force: 185.38 tonnes." },
 
-    "Copper_2_0_Cold": { id: "G5wZ7RKTxbk", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=0." },
-    "Copper_2_Medium_Cold": { id: "9XktRYoysrY", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=Medium." },
-    "Copper_2_High_Cold": { id: "OZ9hed_dkaU", desc: "Mechanical Press | Copper | L/D=2 | Cold | Friction=High." },
-
-    // --- COPPER HOT ---
-    "Copper_1_0_Hot": { id: "QyowFqJVjqo", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=0." },
-    "Copper_1_Medium_Hot": { id: "uq867SDtMX0", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=Medium." },
-    "Copper_1_High_Hot": { id: "mMkK2LZip2Y", desc: "Mechanical Press | Copper | L/D=1 | Hot | Friction=High." },
-
-    "Copper_1.5_0_Hot": { id: "GB5EQVKHayI", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=0." },
-    "Copper_1.5_Medium_Hot": { id: "is_8MInyDJ8", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=Medium. Scale shows equivalent strain." },
-    "Copper_1.5_High_Hot": { id: "3Uhq6jv7qrw", desc: "Mechanical Press | Copper | L/D=1.5 | Hot | Friction=High." },
-
-    "Copper_2_0_Hot": { id: "5IM_0jrIOvw", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=0." },
-    "Copper_2_Medium_Hot": { id: "63FUwnUAoBQ", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=Medium." },
-    "Copper_2_High_Hot": { id: "6as0xm6T_XY", desc: "Mechanical Press | Copper | L/D=2 | Hot | Friction=High." },
-
-    // --- STEEL COLD ---
-    "Steel_1_0_Cold": { id: "SLEJFcmKpSU", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=0." },
-    "Steel_1_Medium_Cold": { id: "yRqzuBMF6bk", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=Medium." },
-    "Steel_1_High_Cold": { id: "NC_UQXpMyNc", desc: "Mechanical Press | Steel | L/D=1 | Cold | Friction=High." },
-
-    "Steel_1.5_0_Cold": { id: "rwUkIa55dno", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=0." },
-    "Steel_1.5_Medium_Cold": { id: "GeK7nGvUnPc", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=Medium." },
-    "Steel_1.5_High_Cold": { id: "1bF6sdOPgB8", desc: "Mechanical Press | Steel | L/D=1.5 | Cold | Friction=High." },
-
-    "Steel_2_0_Cold": { id: "X9rXJMZPRsA", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=0." },
-    "Steel_2_Medium_Cold": { id: "8vkmdItF4cw", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=Medium." },
-    "Steel_2_High_Cold": { id: "eKYS5X7kBXk", desc: "Mechanical Press | Steel | L/D=2 | Cold | Friction=High." },
-
-    // --- STEEL HOT ---
-    "Steel_1_0_Hot": { id: "V_RScIStnTg", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=0." },
-    "Steel_1_Medium_Hot": { id: "PCLWEHkYU5g", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=Medium." },
-    "Steel_1_High_Hot": { id: "HemzEEJ73Ws", desc: "Mechanical Press | Steel | L/D=1 | Hot | Friction=High." },
-
-    "Steel_1.5_0_Hot": { id: "04v2g-4rnwE", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=0." },
-    "Steel_1.5_Medium_Hot": { id: "x6hE60TQpd0", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=Medium." },
-    "Steel_1.5_High_Hot": { id: "CYf6ekJANLo", desc: "Mechanical Press | Steel | L/D=1.5 | Hot | Friction=High." },
-
-    "Steel_2_0_Hot": { id: "_q6IAva1HAg", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=0." },
-    "Steel_2_Medium_Hot": { id: "RDiQlhiYcPE", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=Medium." },
-    "Steel_2_High_Hot": { id: "Xw-0wUhYrvc", desc: "Mechanical Press | Steel | L/D=2 | Hot | Friction=High." },
-
-    // --- TITANIUM COLD ---
-    "Titanium_1_0_Cold": { id: "C7NRM9976UA", desc: "Titanium Cold Upsetting (L/D=1, Friction=0). Max Force: 290.52 tonnes. Avg equivalent strain: 0.69. Axis symmetric simulation." },
-    "Titanium_1_Medium_Cold": { id: "W2bHPsl157Q", desc: "Titanium Cold Upsetting (L/D=1, Friction=Medium). Initial Temp: 25C, Final Temp: 261.85C. Max Force: 302.06 tonnes." },
-    "Titanium_1_High_Cold": { id: "YdPP0-36ifM", desc: "Titanium Cold Upsetting (L/D=1, Friction=High). Initial Temp: 25C, Final Temp: 316.71C. Max Force: 319.02 tonnes." },
-
-    "Titanium_1.5_0_Cold": { id: "jqFZkP_a_3o", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=0). Initial Temp: 25C, Final Temp: 136.16C. Max Force: 211.09 tonnes." },
-    "Titanium_1.5_Medium_Cold": { id: "750605tq1Qs", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=Medium). Initial Temp: 25C, Final Temp: 137.83C. Max Force: 214.12 tonnes." },
-    "Titanium_1.5_High_Cold": { id: "WrnmcbjyC1g", desc: "Titanium Cold Upsetting (L/D=1.5, Friction=High). Initial Temp: 25C, Final Temp: 166.21C. Max Force: 213.9 tonnes." },
-
-    "Titanium_2_0_Cold": { id: "W4ao11XXz2I", desc: "Titanium Cold Upsetting (L/D=2, Friction=0). Initial Temp: 25C, Final Temp: 99.82C. Max Force: 181.97 tonnes." },
-    "Titanium_2_Medium_Cold": { id: "Uz3Qw0Ts3S4", desc: "Titanium Cold Upsetting (L/D=2, Friction=Medium). Initial Temp: 25C, Final Temp: 109.51C. Max Force: 183.78 tonnes." },
-    "Titanium_2_High_Cold": { id: "hhZgb-2q37Q", desc: "Titanium Cold Upsetting (L/D=2, Friction=High). Initial Temp: 25C, Final Temp: 115.50C. Max Force: 185.38 tonnes." },
-
-    // --- TITANIUM HOT ---
-    "Titanium_1_0_Hot": { id: "S51jNOrc36k", desc: "Titanium Hot Upsetting (L/D=1, Friction=0). Initial Temp: 300C, Final Temp: 619.73C. Max Force: 630.29 tonnes." },
-    "Titanium_1_Medium_Hot": { id: "GXdeANmtAHg", desc: "Titanium Hot Upsetting (L/D=1, Friction=Medium). Initial Temp: 300C, Final Temp: 690.12C. Max Force: 639.88 tonnes." },
-    "Titanium_1_High_Hot": { id: "2NQYZnniyug", desc: "Titanium Hot Upsetting (L/D=1, Friction=High). Initial Temp: 300C, Final Temp: 580.25C. Max Force: 442.64 tonnes." },
-
-    "Titanium_1.5_0_Hot": { id: "OITpI9aiHos", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=0). Initial Temp: 300C, Final Temp: 541.26C. Max Force: 588.9 tonnes." },
-    "Titanium_1.5_Medium_Hot": { id: "T-ZVgbM6_eY", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=Medium). Initial Temp: 300C, Final Temp: 620.22C. Max Force: 594.62 tonnes." },
-    "Titanium_1.5_High_Hot": { id: "hQ4XmYIrKIs", desc: "Titanium Hot Upsetting (L/D=1.5, Friction=High). Initial Temp: 300C, Final Temp: 654.40C. Max Force: 605.43 tonnes." },
-
-    "Titanium_2_0_Hot": { id: "5L4wY2ncjjI", desc: "Titanium Hot Upsetting (L/D=2, Friction=0). Initial Temp: 300C, Final Temp: 495.28C. Max Force: 562.45 tonnes." },
-    "Titanium_2_Medium_Hot": { id: "uZzfKu5NQbo", desc: "Titanium Hot Upsetting (L/D=2, Friction=Medium). Initial Temp: 300C, Final Temp: 559.40C. Max Force: 566.54 tonnes." },
-    "Titanium_2_High_Hot": { id: "NiW27QYWB4k", desc: "Titanium Hot Upsetting (L/D=2, Friction=High). Initial Temp: 300C, Final Temp: 589.11C. Max Force: 574.11 tonnes." }
+    // ================= TITANIUM HOT =================
+    "Titanium_1_0_Hot": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1/Mechanical_Ti_HOT_F0_LD1.mp4", 
+        desc: "Titanium Hot Upsetting (L/D=1, Friction=0). Initial Temp: 300C, Final Temp: 619.73C. Max Force: 630.29 tonnes." 
+    },
+    "Titanium_1_Medium_Hot": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1/Mechanical_Ti_HOT_FM_LD1.mp4", 
+        desc: "Titanium Hot Upsetting (L/D=1, Friction=Medium). Initial Temp: 300C, Final Temp: 690.12C. Max Force: 639.88 tonnes." 
+    },
+    "Titanium_1_High_Hot": { 
+        path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1/Mechanical_Ti_HOT_FH_LD1.mp4", 
+        desc: "Titanium Hot Upsetting (L/D=1, Friction=High). Initial Temp: 300C, Final Temp: 580.25C. Max Force: 442.64 tonnes." 
+    },
+    "Titanium_1.5_0_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1P5/Mechanical_Ti_HOT_F0_LD1P5.mp4", desc: "Titanium Hot (L/D=1.5, F=0). Final Temp: 541.26C. Max Force: 588.9 tonnes." },
+    "Titanium_1.5_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1P5/Mechanical_Ti_HOT_FM_LD1P5.mp4", desc: "Titanium Hot (L/D=1.5, F=Medium). Final Temp: 620.22C. Max Force: 594.62 tonnes." },
+    "Titanium_1.5_High_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD1P5/Mechanical_Ti_HOT_FH_LD1P5.mp4", desc: "Titanium Hot (L/D=1.5, F=High). Final Temp: 654.40C. Max Force: 605.43 tonnes." },
+    "Titanium_2_0_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD2/Mechanical_Ti_HOT_F0_LD2.mp4", desc: "Titanium Hot (L/D=2, F=0). Final Temp: 495.28C. Max Force: 562.45 tonnes." },
+    "Titanium_2_Medium_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD2/Mechanical_Ti_HOT_FM_LD2.mp4", desc: "Titanium Hot (L/D=2, F=Medium). Final Temp: 559.40C. Max Force: 566.54 tonnes." },
+    "Titanium_2_High_Hot": { path: "UPSETTING/Mech_Upsetting/TI_Hot_LD2/Mechanical_Ti_HOT_FH_LD2.mp4", desc: "Titanium Hot (L/D=2, F=High). Final Temp: 589.11C. Max Force: 574.11 tonnes." }
 };
 
 document.getElementById('simForm').addEventListener('submit', function(e) {
     e.preventDefault();
-  
+   
     const formData = new FormData(e.target);
     const mat = formData.get('mat');
     const ld = formData.get('ld');
     const fr = formData.get('fr');
-    const temp = formData.get('temp'); // Mapped from 'm/w' in original PHP
+    const temp = formData.get('temp');
 
     if(!mat || !ld || !fr || !temp) {
         alert("Please select all options to run the simulation.");
@@ -431,23 +447,29 @@ document.getElementById('simForm').addEventListener('submit', function(e) {
 
 function openModal(result) {
     const modal = document.getElementById('videoModal');
-    const videoFrame = document.getElementById('simVideo');
+    const video = document.getElementById('simVideo');
     const descBox = document.getElementById('simDesc');
     
-    videoFrame.src = "https://www.youtube.com/embed/" + result.id + "?autoplay=1";
+    // Update Video Source
+    video.src = result.path;
     descBox.textContent = result.desc;
     
     modal.style.display = "block";
     document.body.style.overflow = "hidden";
+    
+    // Attempt to play video
+    video.load();
+    video.play().catch(e => console.log("Auto-play prevented"));
 }
 
 function closeModal(event) {
     if (event === null || event.target.id === 'videoModal') {
         const modal = document.getElementById('videoModal');
-        const videoFrame = document.getElementById('simVideo');
+        const video = document.getElementById('simVideo');
         
         modal.style.display = "none";
-        videoFrame.src = ""; // Stop video
+        video.pause(); // Stop the video
+        video.currentTime = 0; // Reset video to start
         document.body.style.overflow = "auto";
     }
 }
