@@ -1,5 +1,10 @@
+# References: Upsetting Process in Manufacturing
 
-### 1. Standard Textbooks
+This document lists standard textbooks, research papers, journals, and online resources related to the **Upsetting Process**, a key metal forming operation in manufacturing and forging.
+
+---
+
+## 1. Standard Textbooks
 
 1. Kalpakjian, S., & Schmid, S. R.  
    **Manufacturing Processes for Engineering Materials**  
@@ -28,7 +33,7 @@
 
 ---
 
-### 2. Research Papers & Journals
+## 2. Research Papers & Journals
 
 1. Avitzur, B.  
    **Analysis of Metal Flow in Upsetting of Cylinders**  
@@ -48,7 +53,7 @@
 
 ---
 
-### 3. Standards and Handbooks
+## 3. Standards and Handbooks
 
 1. ASM International  
    **ASM Handbook – Volume 14: Forming and Forging**
@@ -61,7 +66,7 @@
 
 ---
 
-### 4. Online Resources
+## 4. Online Resources
 
 1. ASM International – Forging Resource Center  
    https://www.asminternational.org
@@ -80,7 +85,7 @@
 
 ---
 
-### 5. Key Topics Covered in References
+## 5. Key Topics Covered in References
 
 - Principle of Upsetting
 - Stress and Strain Distribution
@@ -92,9 +97,11 @@
 
 ---
 
-### 6. Suggested Citation Format (IEEE)
+## 6. Suggested Citation Format (IEEE)
 
 Example:  
 > S. Kalpakjian and S. R. Schmid, *Manufacturing Processes for Engineering Materials*, Pearson Education, 2014.
 
+---
 
+*End of Document*
